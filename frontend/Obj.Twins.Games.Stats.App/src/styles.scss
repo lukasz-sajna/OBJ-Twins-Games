@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: "IndustryW00-Bold";
+  src: url("./assets/fonts/b14485043aeeae9b1e5ad99f51fca8a7.eot"); /* IE9*/
+  src: url("./assets/fonts/b14485043aeeae9b1e5ad99f51fca8a7.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("./assets/fonts/b14485043aeeae9b1e5ad99f51fca8a7.woff2")
+      format("woff2"),
+    /* chrome firefox */
+      url("./assets/fonts/b14485043aeeae9b1e5ad99f51fca8a7.woff") format("woff"),
+    /* chrome firefox */
+      url("./assets/fonts/b14485043aeeae9b1e5ad99f51fca8a7.ttf")
+      format("truetype"),
+    /* chrome firefox opera Safari, Android, iOS 4.2+*/
+      url("./assets/fonts/b14485043aeeae9b1e5ad99f51fca8a7.svg#IndustryW00-Bold")
+      format("svg"); /* iOS 4.1- */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button:focus {
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #888888;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6c6c6c;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #6c6c6c;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border: 0px none #ffffff;
+  border-radius: 48px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #cacaca;
+}
+::-webkit-scrollbar-track:active {
+  background: #bcbcbc;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

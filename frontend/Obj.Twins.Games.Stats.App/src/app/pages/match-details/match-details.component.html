@@ -1,0 +1,10 @@
+<div
+  class="container mat-elevation-z6 match"
+  [ngStyle]="{ height: ContainerHeight }"
+>
+  <div class="row">
+    <app-match-details-card
+      [matchDetails]="matchDetails$ | async"
+    ></app-match-details-card>
+  </div>
+</div>

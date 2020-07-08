@@ -1,0 +1,10 @@
+<div
+  class="container pt-4 mat-elevation-z6"
+  [ngStyle]="{ 'max-height': ContainerHeight }"
+>
+  <app-player-stats-table
+    [isLoading]="isLoading$ | async"
+    [playersData]="playersData$"
+    (rowClicked)="rowClicked($event)"
+  ></app-player-stats-table>
+</div>

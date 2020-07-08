@@ -1,0 +1,43 @@
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+tr.clickable {
+  cursor: pointer;
+}
+
+.table-container {
+  overflow: auto;
+}
+
+.avatar {
+  max-height: 3vh;
+}
+
+.no-data {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+mat-cell:nth-child(1),
+mat-header-cell:nth-child(1) {
+  flex: 0 0 30%;
+}
+
+mat-cell:nth-child(5),
+mat-header-cell:nth-child(5) {
+  flex: 0 0 10%;
+}
+
+.row-spinner {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 120px;
+}

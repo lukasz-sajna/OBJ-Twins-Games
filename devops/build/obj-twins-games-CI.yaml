@@ -49,7 +49,20 @@ jobs:
         displayName: 'Publish Artifact: Obj.Twins.Games.Api'
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/obj-twins-games-CI/api'
-          ArtifactName: 'obj-twins-games-CI_api'
+          ArtifactName: 'obj-twins-games-CI_api'      
+
+      - task: CopyFiles@2
+        displayName: 'Copy Assets'
+        inputs:
+          SourceFolder: Backend/Assets
+          TargetFolder: '$(build.artifactstagingdirectory)\obj-twins-games-CI\assets'
+          CleanTargetFolder: true
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: Assets'
+        inputs:
+          PathtoPublish: '$(build.artifactstagingdirectory)\obj-twins-games-CI\assets'
+          ArtifactName: 'obj-twins-games-CI_assets'
   - job: 'BuildApp'
     displayName: 'Build App'
     steps:

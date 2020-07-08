@@ -1,0 +1,53 @@
+.match-card {
+  background-position: center;
+  cursor: pointer;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.font-team {
+  font-family: "IndustryW00-Bold";
+  font-size: 30px;
+
+  &__score {
+    font-size: 82px;
+  }
+}
+
+.font-yellow {
+  color: #edcf3d;
+}
+
+.font-blue {
+  color: #57bafe;
+}
+
+div .centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+div .score {
+  height: 100px;
+  background-color: #000000;
+}
+
+div .team {
+  height: 100px;
+}
+
+div .gradient-left {
+  background: linear-gradient(to left, #000000, rgba(#ffffff, 0));
+}
+
+div .gradient-right {
+  background: linear-gradient(to right, #000000, rgba(#ffffff, 0));
+}
+
+div .no-blur {
+  z-index: 5;
+}
