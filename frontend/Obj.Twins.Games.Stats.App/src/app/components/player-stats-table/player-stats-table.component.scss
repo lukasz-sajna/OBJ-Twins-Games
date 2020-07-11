@@ -41,3 +41,10 @@ mat-header-cell:nth-child(5) {
   margin-bottom: 20px;
   height: 120px;
 }
+
+.mat-header-row{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  }

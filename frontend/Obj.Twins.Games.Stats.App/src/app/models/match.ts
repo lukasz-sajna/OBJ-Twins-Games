@@ -1,11 +1,8 @@
+import { Team } from './team';
+
 export interface Match {
-    matchId: number;
-    firstTeamName: string;
-    firstTeamFlag: string;
-    firstTeamScore: number;
-    secondTeamName: string;
-    secondTeamFlag: string;
-    secondTeamScore: number;
+    id: string;
+    teams: Team[];
     map: string;
     matchFinishedAt: Date;
 }

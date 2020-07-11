@@ -19,13 +19,15 @@ import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
 import { MATCH_DETAILS_ROUTE } from 'src/app/routes';
 import { PlayersService } from 'src/app/services/players.service';
+import { MatchesService } from 'src/app/services/matches.service';
 
 @Injectable()
 export class StatsEffects {
     constructor(
         private actions$: Actions,
         private statsDataService: StatsDataService,
-        private playerService: PlayersService,
+        private playersService: PlayersService,
+        private matchesService: MatchesService,
         private toastService: ToastService,
         private router: Router,
     ) { }
@@ -34,7 +36,7 @@ export class StatsEffects {
         this.actions$.pipe(
             ofType(playersStatsRequested),
             switchMap(() =>
-                this.playerService.getPlayersStats().pipe(
+                this.playersService.getPlayersStats().pipe(
                     map(data => playersStatsRequestedSuccess({ response: data })),
                     catchError(error => of(playersStatsRequestedFailure({ error }))))
             ),
@@ -44,7 +46,7 @@ export class StatsEffects {
         this.actions$.pipe(
             ofType(matchListRequested),
             switchMap(() =>
-                this.statsDataService.getMatches().pipe(
+                this.matchesService.getMatches().pipe(
                     map(data => matchListRequestedSuccess({ response: data })),
                     catchError(error => of(matchListRequestedFailure({ error }))))
             ),

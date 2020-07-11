@@ -134,6 +134,7 @@ namespace Obj.Twins.Games.DataSync.Components.Commands
                 OriginalMatchId = serverMatch.MatchId,
                 Map = serverMatch.Map,
                 MatchFinishedAt = serverMatch.Timestamp,
+                CreatedDate = DateTimeOffset.UtcNow,
                 TeamInMatches = new List<TeamInMatch>
                 {
                     new TeamInMatch

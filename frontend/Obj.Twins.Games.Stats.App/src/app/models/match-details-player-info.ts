@@ -1,5 +1,3 @@
-import { PlayerSteamInfo } from './player-steam-info';
-
 export interface MatchDetailsPlayerInfo {
     name: string;
     steamId: string;
@@ -10,5 +8,4 @@ export interface MatchDetailsPlayerInfo {
     mvp: number;
     score: number;
     kdRatio: number;
-    steamPlayerData: PlayerSteamInfo;
 }

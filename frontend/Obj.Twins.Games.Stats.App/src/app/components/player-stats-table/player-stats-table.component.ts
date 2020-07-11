@@ -22,7 +22,7 @@ export class PlayerStatsTableComponent implements OnInit, OnDestroy {
   @Output()
   public rowClicked: EventEmitter<string> = new EventEmitter();
 
-  public displayedColumns: string[] = ['name', 'kills', 'assists', 'deaths', 'kd', 'mvp', 'matchesPlayed', 'score'];
+  public displayedColumns: string[] = ['name', 'kills', 'assists', 'deaths', 'kdRatio', 'mvp', 'matchesPlayed', 'score'];
   public dataSource: MatTableDataSource<PlayerInfo> = new MatTableDataSource<PlayerInfo>([]);
 
   public noData$ = this.dataSource.connect().pipe(

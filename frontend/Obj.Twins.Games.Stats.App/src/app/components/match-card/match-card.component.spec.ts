@@ -17,7 +17,10 @@ describe('MatchCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MatchCardComponent);
     component = fixture.componentInstance;
-    component.match = { map: 'de_dust2' } as Match;
+    component.match = {
+      map: 'de_dust2',
+      teams: [{}, {}]
+    } as Match;
     fixture.detectChanges();
   });
 

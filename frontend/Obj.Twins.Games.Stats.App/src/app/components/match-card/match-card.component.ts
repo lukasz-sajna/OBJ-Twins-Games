@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostBinding, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Match } from 'src/app/models/match';
 import { MapBackgroundService } from 'src/app/services/map-background.service';
-import { MatCard } from '@angular/material/card';
+import { Team } from 'src/app/models/team';
 
 @Component({
   selector: 'app-match-card',
@@ -13,7 +13,7 @@ export class MatchCardComponent {
   public match: Match;
 
   @Output()
-  public clicked: EventEmitter<number> = new EventEmitter();
+  public clicked: EventEmitter<string> = new EventEmitter();
 
   constructor(private backgroundService: MapBackgroundService) { }
 
@@ -23,5 +23,13 @@ export class MatchCardComponent {
 
   public flagUrl(flagCode: string): string {
     return `https://www.countryflags.io/${flagCode}/flat/64.png`;
+  }
+
+  public get FirstTeam(): Team {
+    return this.match.teams[0];
+  }
+
+  public get SecondTeam(): Team {
+    return this.match.teams[1];
   }
 }

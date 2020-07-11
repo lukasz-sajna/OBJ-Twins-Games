@@ -6,19 +6,14 @@ namespace Obj.Twins.Games.Statistics.Persistence.Models
     [Table(nameof(Match))]
     public class Match : Entity
     {
-        public Match()
-        {
-            CreatedDate = DateTimeOffset.UtcNow;
-        }
-
         public long OriginalMatchId { get; set; }
 
         public string Map { get; set; }
 
         public Uri DemoUrl { get; set; }
 
-        public DateTimeOffset CreatedDate {get; }
-                
+        public DateTimeOffset CreatedDate {get; set; }
+
         public DateTime MatchFinishedAt { get; set; }
 
         public ICollection<TeamInMatch> TeamInMatches { get; set; }

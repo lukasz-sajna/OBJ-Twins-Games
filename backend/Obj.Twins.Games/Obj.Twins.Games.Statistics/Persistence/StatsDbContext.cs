@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Obj.Twins.Games.Statistics.Persistence.Models;
 
@@ -73,7 +75,15 @@ namespace Obj.Twins.Games.Statistics.Persistence
         public IQueryable<Match> GetMatches()
         {
             return Matches.Include(x => x.TeamInMatches).ThenInclude(x => x.Team).ThenInclude(x => x.NameFromPlayer)
-                .OrderBy(m => m.MatchFinishedAt);
+                .Where(x => !x.IsDeleted)
+                .OrderByDescending(m => m.MatchFinishedAt);
+        }
+
+        public Task<Match> GetMatchDetails(Guid id, CancellationToken cancellationToken = default)
+        {
+            return Matches.Include(x => x.TeamInMatches).ThenInclude(x => x.PlayerInTeamInMatches)
+                .Include(x => x.TeamInMatches).ThenInclude(x => x.Team)
+                .Where(x => !x.IsDeleted).FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
         }
 
     }

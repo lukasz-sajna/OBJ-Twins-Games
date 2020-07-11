@@ -26,6 +26,9 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Queries
         public async Task<List<PlayerResponse>> Handle(GetPlayersQuery request, CancellationToken cancellationToken)
         {
             var players = await _statsDbContext.PlayerInTeamInMatches.Include(x => x.Player)
+                .Include(tm => tm.TeamInMatch)
+                .ThenInclude(m=>m.Match)
+                .Where(x => !x.TeamInMatch.Match.IsDeleted)
                 .Select(p => p.ToPlayerResponse())
                 .ToListAsync(cancellationToken);
 

@@ -25,7 +25,7 @@ export class MatchComponent implements OnInit {
     this.store.dispatch(matchListRequested());
   }
 
-  public matchClicked(matchId: number): void {
+  public matchClicked(matchId: string): void {
     this.store.dispatch(openMatchDetails({ matchId }));
   }
 

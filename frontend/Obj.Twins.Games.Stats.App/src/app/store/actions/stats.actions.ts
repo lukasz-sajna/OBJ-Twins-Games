@@ -23,8 +23,8 @@ export const matchListRequested = createAction(MATCH_LIST_REQUESTED);
 export const matchListRequestedSuccess = createAction(MATCH_LIST_REQUESTED_SUCCESS, props<{ response: Match[] }>());
 export const matchListRequestedFailure = createAction(MATCH_LIST_REQUESTED_FAILURE, props<{ error: string }>());
 
-export const openMatchDetails = createAction(OPEN_MATCH_DETAILS, props<{ matchId: number }>());
+export const openMatchDetails = createAction(OPEN_MATCH_DETAILS, props<{ matchId: string }>());
 
-export const matchDetailsRequested = createAction(MATCH_DETAILS_REQUESTED, props<{ matchId: number }>());
+export const matchDetailsRequested = createAction(MATCH_DETAILS_REQUESTED, props<{ matchId: string }>());
 export const matchDetailsRequestedSuccess = createAction(MATCH_DETAILS_REQUESTED_SUCCESS, props<{ response: MatchDetails }>());
 export const matchDetailsRequestedFailure = createAction(MATCH_DETAILS_REQUESTED_FAILURE, props<{ error: string }>());

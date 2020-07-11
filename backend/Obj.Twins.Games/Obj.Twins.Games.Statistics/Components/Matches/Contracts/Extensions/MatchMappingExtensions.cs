@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Obj.Twins.Games.Statistics.Persistence.Models;
 
 namespace Obj.Twins.Games.Statistics.Components.Matches.Contracts.Extensions
@@ -10,9 +11,21 @@ namespace Obj.Twins.Games.Statistics.Components.Matches.Contracts.Extensions
             return new MatchResponse
             {
                 Id = match.Id,
-                TeamsInMatch = match.TeamInMatches.Select(x => x.ToTeamInMatchResponse()).ToList(),
+                Teams = match.TeamInMatches.Select(x => x.ToTeamInMatchResponse()).ToList(),
                 Map = match.Map,
                 MatchFinishedAt = match.MatchFinishedAt
+            };
+        }
+
+        internal static MatchDetailsResponse ToMatchDetailsResponse(this Match match)
+        {
+            return new MatchDetailsResponse
+            {
+                Id = match.Id,
+                Map = match.Map,
+                MatchFinishedAt = match.MatchFinishedAt,
+                DemoUrl = match.DemoUrl,
+                Teams = new List<TeamInMatchDetailsResponse>()
             };
         }
     }

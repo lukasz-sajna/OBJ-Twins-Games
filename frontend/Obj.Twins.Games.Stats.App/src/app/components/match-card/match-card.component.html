@@ -1,13 +1,13 @@
 <mat-card
   class="match-card mt-2 blurry py-0 h-100"
   [ngStyle]="{ 'background-image': 'url(' + BackgroundUrl + ')' }"
-  (click)="clicked.emit(match.matchId)"
+  (click)="clicked.emit(match.id)"
 >
   <div class="row h-100 align-items-center">
     <div class="col text-right team gradient-left">
       <div class="font-team font-blue card-body pr-0">
-        {{ match.firstTeamName }}
-        <img [src]="flagUrl(match.firstTeamFlag)" alt="flag" />
+        {{ FirstTeam.name }}
+        <img [src]="flagUrl(FirstTeam.flag)" alt="flag" />
       </div>
     </div>
     <div class="col-3 text-center score">
@@ -15,19 +15,19 @@
         <div
           class="col-6 d-inline-block text-right font-team font-team__score font-blue card-body pl-0 mt-4"
         >
-          {{ match.firstTeamScore }}
+          {{ FirstTeam.score}}
         </div>
         <div
           class="col-6 d-inline-block text-left font-team font-team__score font-yellow card-body pr-0 mt-4"
         >
-          {{ match.secondTeamScore }}
+          {{ SecondTeam.score }}
         </div>
       </div>
     </div>
     <div class="col text-left team gradient-right">
       <div class="font-team font-yellow card-body pl-0">
-        <img [src]="flagUrl(match.secondTeamFlag)" alt="flag" />
-        {{ match.secondTeamName }}
+        <img [src]="flagUrl(SecondTeam.flag)" alt="flag" />
+        {{ SecondTeam.name }}
       </div>
     </div>
   </div>

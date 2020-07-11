@@ -10,7 +10,7 @@ import { Match } from '../models/match';
 })
 export class MatchesService {
   private readonly matchEndpoint = 'matches';
-  private readonly matchDetailsEndpoint = 'matches/MatchDetails';
+  private readonly matchDetailsEndpoint = 'matches/MatchDetails/';
 
 
   constructor(@Inject(API_URL) private apiUrl: string, private http: HttpClient) { }

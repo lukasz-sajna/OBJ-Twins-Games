@@ -23,9 +23,9 @@ namespace Obj.Twins.Games.Api.Controllers
         }
 
         [HttpGet("MatchDetails")]
-        public IActionResult GetMatchDetails(Guid id)
+        public async Task<IActionResult> GetMatchDetails(Guid id)
         {
-            return Ok();
+            return Ok(await _mediator.Send(new GetMatchDetailsQuery {Id = id}));
         }
     }
 }

@@ -18,10 +18,7 @@ export class StatsDataService {
     return this.http.get<PlayerInfo[]>(`${this.apiUrl}${StatsDataEndpoints.playersStats}`, { responseType: 'json' });
   }
 
-  public getMatches(): Observable<Match[]> {
-    return this.http.get<Match[]>(`${this.apiUrl}${StatsDataEndpoints.matches}`);
-  }
-  public getMatchDetails(matchId: number): Observable<MatchDetails> {
+  public getMatchDetails(matchId: string): Observable<MatchDetails> {
     return this.http.get<MatchDetails>(`${this.apiUrl}${StatsDataEndpoints.matchDetails}${matchId}`);
   }
 
