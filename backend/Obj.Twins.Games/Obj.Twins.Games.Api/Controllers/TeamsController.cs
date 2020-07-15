@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Obj.Twins.Games.Statistics.Components.Teams.Queries;
 
 namespace Obj.Twins.Games.Api.Controllers
 {
@@ -15,9 +17,9 @@ namespace Obj.Twins.Games.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTeams()
+        public async Task<IActionResult> GetTeams()
         {
-            return Ok();
+            return Ok(await _mediator.Send(new GetTeamsQuery()));
         }
 
         [HttpGet("TeamDetails")]

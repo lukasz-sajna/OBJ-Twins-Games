@@ -21,8 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\Teams\Contracts\" />
-    <Folder Include="Components\Teams\Queries\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
 
