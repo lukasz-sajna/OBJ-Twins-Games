@@ -19,10 +19,14 @@ export class PlayerStatsTableComponent implements OnInit, OnDestroy {
   @Input()
   public isLoading = false;
 
+  @Input()
+  public showMatchesPlayed = false;
+
   @Output()
   public rowClicked: EventEmitter<string> = new EventEmitter();
 
-  public displayedColumns: string[] = ['name', 'kills', 'assists', 'deaths', 'kdRatio', 'mvp', 'matchesPlayed', 'score'];
+public displayedColumns: string[] = [];
+
   public dataSource: MatTableDataSource<PlayerInfo> = new MatTableDataSource<PlayerInfo>([]);
 
   public noData$ = this.dataSource.connect().pipe(
@@ -33,6 +37,10 @@ export class PlayerStatsTableComponent implements OnInit, OnDestroy {
   public sort: MatSort;
 
   public ngOnInit(): void {
+    this.displayedColumns = this.showMatchesPlayed
+    ? ['name', 'kills', 'assists', 'deaths', 'kdRatio', 'mvp', 'matchesPlayed', 'score']
+    : ['name', 'kills', 'assists', 'deaths', 'kdRatio', 'mvp', 'score'];
+
     this.playersData.pipe(
       untilDestroyed(this),
       tap(data => {

@@ -40,7 +40,10 @@ export class MatchDetailsComponent implements OnInit {
 
   public get ContainerHeight(): string {
     const header = document.getElementById('header');
-    return `calc(100vh - ${header.getBoundingClientRect().height + 30}px)`;
+    if (header) {
+      return `calc(100vh - ${header.getBoundingClientRect().height + 30}px)`;
+    }
+    return '0';
   }
 
   public flagUrl(flagCode: string): string {

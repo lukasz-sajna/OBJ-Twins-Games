@@ -9,8 +9,8 @@ using Obj.Twins.Games.Statistics.Persistence;
 
 namespace Obj.Twins.Games.Statistics.Migrations
 {
-    [DbContext(typeof(StatsDbContext))]
-    [Migration("20200708001846_Initial")]
+    [DbContext(typeof(StatisticsDbContext))]
+    [Migration("20200712210558_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

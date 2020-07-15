@@ -14,9 +14,9 @@ namespace Obj.Twins.Games.Statistics.Components.Matches.Queries
     {
         internal class GetMatchesQueryHandler : IRequestHandler<GetMatchesQuery, List<MatchResponse>>
         {
-            private readonly StatsDbContext _statsDbContext;
+            private readonly StatisticsDbContext _statsDbContext;
 
-            public GetMatchesQueryHandler(StatsDbContext statsDbContext)
+            public GetMatchesQueryHandler(StatisticsDbContext statsDbContext)
             {
                 _statsDbContext = statsDbContext;
             }

@@ -19,7 +19,7 @@ describe('MatchCardComponent', () => {
     component = fixture.componentInstance;
     component.match = {
       map: 'de_dust2',
-      teams: [{}, {}]
+      teams: [{ name: 'Team A', flag: 'pl', score: 15 }, { name: 'Team B', flag: 'pl', score: 15 }]
     } as Match;
     fixture.detectChanges();
   });

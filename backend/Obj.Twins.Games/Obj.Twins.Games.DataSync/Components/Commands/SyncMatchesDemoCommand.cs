@@ -17,10 +17,10 @@ namespace Obj.Twins.Games.DataSync.Components.Commands
     internal class SyncMatchesDemoCommandHandler : IRequestHandler<SyncMatchesDemoCommand>
     {
         private readonly IDemoService _demoService;
-        private readonly StatsDbContext _statsDbContext;
+        private readonly StatisticsDbContext _statsDbContext;
         private readonly IHubContext<StatisticsHub> _hubContext;
 
-        public SyncMatchesDemoCommandHandler(IDemoService demoService, StatsDbContext statsDbContext, IHubContext<StatisticsHub> hubContext)
+        public SyncMatchesDemoCommandHandler(IDemoService demoService, StatisticsDbContext statsDbContext, IHubContext<StatisticsHub> hubContext)
         {
             _demoService = demoService;
             _statsDbContext = statsDbContext;

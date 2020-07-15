@@ -46,7 +46,7 @@ namespace Obj.Twins.Games.Api.Extensions
         public static IServiceCollection ConfigureHealthChecks(this IServiceCollection services)
         {
             services.AddHealthChecks()
-                .AddDbContextCheck<StatsDbContext>()
+                .AddDbContextCheck<StatisticsDbContext>()
                 .AddDbContextCheck<ServerStatsDbContext>();
 
             return services;

@@ -16,9 +16,9 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Queries
 
     internal class GetPlayersQueryHandler : IRequestHandler<GetPlayersQuery, List<PlayerResponse>>
     {
-        private readonly StatsDbContext _statsDbContext;
+        private readonly StatisticsDbContext _statsDbContext;
 
-        public GetPlayersQueryHandler(StatsDbContext statsDbContext)
+        public GetPlayersQueryHandler(StatisticsDbContext statsDbContext)
         {
             _statsDbContext = statsDbContext;
         }

@@ -19,4 +19,8 @@ export class HeaderComponent {
     this.store.dispatch(openPlayersStats());
   }
 
+  public openTeams(): void {
+
+  }
+
 }

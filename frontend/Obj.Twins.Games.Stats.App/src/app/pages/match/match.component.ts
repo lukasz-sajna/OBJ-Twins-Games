@@ -31,7 +31,10 @@ export class MatchComponent implements OnInit {
 
   public get ContainerHeight(): string {
     const header = document.getElementById('header');
-    return `calc(100vh - ${header.getBoundingClientRect().height + 30}px)`;
+    if (header) {
+      return `calc(100vh - ${header.getBoundingClientRect().height + 30}px)`;
+    }
+    return '0';
   }
 
 }

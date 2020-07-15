@@ -7,9 +7,9 @@ using Obj.Twins.Games.Statistics.Persistence.Models;
 
 namespace Obj.Twins.Games.Statistics.Persistence
 {
-    public class StatsDbContext : DbContext
+    public class StatisticsDbContext : DbContext
     {
-        public StatsDbContext(DbContextOptions<StatsDbContext> options) : base(options)
+        public StatisticsDbContext(DbContextOptions<StatisticsDbContext> options) : base(options)
         {
         }
 

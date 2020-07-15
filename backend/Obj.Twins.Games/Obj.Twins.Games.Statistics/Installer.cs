@@ -15,7 +15,7 @@ namespace Obj.Twins.Games.Statistics
         {
             ServiceRegistrar.AddMediatRClasses(serviceCollection, new[] {Assembly});
 
-            serviceCollection.AddDbContext<StatsDbContext>(options =>
+            serviceCollection.AddDbContext<StatisticsDbContext>(options =>
                     options.UseSqlServer(connectionString,
                         x => x.MigrationsHistoryTable("__EFMigrationsHistory", "Stats")),
                 ServiceLifetime.Transient);
@@ -23,7 +23,7 @@ namespace Obj.Twins.Games.Statistics
 
         public static void MigrateStatisticsDb(IServiceProvider serviceProvider)
         {
-            using var dbContext = serviceProvider.GetService<StatsDbContext>();
+            using var dbContext = serviceProvider.GetService<StatisticsDbContext>();
             dbContext.Database.Migrate();
         }
     }

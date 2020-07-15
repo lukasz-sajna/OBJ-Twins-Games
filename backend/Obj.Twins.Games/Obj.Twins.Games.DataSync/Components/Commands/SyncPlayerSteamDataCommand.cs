@@ -17,11 +17,11 @@ namespace Obj.Twins.Games.DataSync.Components.Commands
 
     internal class SyncPlayerSteamDataCommandHandler : IRequestHandler<SyncPlayerSteamDataCommand>
     {
-        private readonly StatsDbContext _statsDbContext;
+        private readonly StatisticsDbContext _statsDbContext;
         private readonly ISteamService _steamService;
         private readonly IHubContext<StatisticsHub> _hubContext;
 
-        public SyncPlayerSteamDataCommandHandler(StatsDbContext statsDbContext, ISteamService steamService, IHubContext<StatisticsHub> hubContext)
+        public SyncPlayerSteamDataCommandHandler(StatisticsDbContext statsDbContext, ISteamService steamService, IHubContext<StatisticsHub> hubContext)
         {
             _statsDbContext = statsDbContext;
             _steamService = steamService;
