@@ -17,7 +17,7 @@ import {
 } from '../actions/stats.actions';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
-import { MATCH_DETAILS_ROUTE } from 'src/app/routes';
+import { MATCH_ROUTE } from 'src/app/routes';
 import { PlayersService } from 'src/app/services/players.service';
 import { MatchesService } from 'src/app/services/matches.service';
 
@@ -62,7 +62,7 @@ export class StatsEffects {
     public openMatchDetails$ = createEffect(() =>
         this.actions$.pipe(
             ofType(openMatchDetails),
-            tap(action => this.router.navigate([MATCH_DETAILS_ROUTE, action.matchId])),
+            tap(action => this.router.navigate([MATCH_ROUTE, action.matchId])),
             map(action => matchDetailsRequested({ matchId: action.matchId }))
         )
     );

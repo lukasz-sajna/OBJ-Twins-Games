@@ -1,8 +1,8 @@
-import { Team } from './team';
+import { TeamInMatch } from './team-in-match';
 
 export interface Match {
     id: string;
-    teams: Team[];
+    teams: TeamInMatch[];
     map: string;
     matchFinishedAt: Date;
 }

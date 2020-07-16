@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { openMatches, openPlayersStats } from 'src/app/store/actions/header.actions';
+import { openMatches, openPlayersStats, openTeamsStats } from 'src/app/store/actions/header.actions';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +20,7 @@ export class HeaderComponent {
   }
 
   public openTeams(): void {
-
+    this.store.dispatch(openTeamsStats());
   }
 
 }

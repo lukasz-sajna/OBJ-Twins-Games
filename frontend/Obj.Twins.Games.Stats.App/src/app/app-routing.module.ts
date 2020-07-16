@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MATCHES_ROUTE, EMPTY_ROUTE, ALL_REMAINING_ROUTES, PLAYERS_STATS_ROUTE, MATCH_DETAILS_ROUTE } from './routes';
+import { MATCHES_ROUTE, EMPTY_ROUTE, ALL_REMAINING_ROUTES, PLAYERS_ROUTE, TEAMS_RTOUTE, MATCH_ROUTE } from './routes';
 import { PlayersStatsComponent } from './pages/players-stats/players-stats.component';
 import { MatchComponent } from './pages/match/match.component';
 import { MatchDetailsComponent } from './pages/match-details/match-details.component';
+import { TeamStatsComponent } from './pages/team-stats/team-stats.component';
 
 
 const routes: Routes = [
@@ -11,10 +12,13 @@ const routes: Routes = [
     path: MATCHES_ROUTE, component: MatchComponent
   },
   {
-    path: PLAYERS_STATS_ROUTE, component: PlayersStatsComponent
+    path: PLAYERS_ROUTE, component: PlayersStatsComponent
   },
   {
-    path: `${MATCH_DETAILS_ROUTE}/:id`, component: MatchDetailsComponent
+    path: TEAMS_RTOUTE, component: TeamStatsComponent
+  },
+  {
+    path: `${MATCH_ROUTE}/:id`, component: MatchDetailsComponent
   },
   {
     path: EMPTY_ROUTE,

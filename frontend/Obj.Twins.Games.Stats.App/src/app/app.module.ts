@@ -23,6 +23,10 @@ import { MatchCardComponent } from './components/match-card/match-card.component
 import { MatchDetailsComponent } from './pages/match-details/match-details.component';
 import { MatchDetailsCardComponent } from './components/match-details-card/match-details-card.component';
 import { MatchDetailsTableComponent } from './components/match-details-table/match-details-table.component';
+import { TeamStatsComponent } from './pages/team-stats/team-stats.component';
+import { TeamStatsTableComponent } from './components/team-stats-table/team-stats-table.component';
+import { TeamsEffects } from './store/effects/teams.effects';
+import { teamsFeatureKey, teamsReducer } from './store/reducers/teams.reducer';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,9 @@ import { MatchDetailsTableComponent } from './components/match-details-table/mat
     MatchCardComponent,
     MatchDetailsComponent,
     MatchDetailsCardComponent,
-    MatchDetailsTableComponent
+    MatchDetailsTableComponent,
+    TeamStatsComponent,
+    TeamStatsTableComponent
   ],
   imports: [
     BrowserModule,
@@ -48,9 +54,10 @@ import { MatchDetailsTableComponent } from './components/match-details-table/mat
       }
     }),
     StoreModule.forFeature(statsFeatureKey, playerStatsReducer),
+    StoreModule.forFeature(teamsFeatureKey, teamsReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot({ routerState: RouterState.Minimal }),
-    EffectsModule.forRoot([StatsEffects, HeaderEffects]),
+    EffectsModule.forRoot([StatsEffects, HeaderEffects, TeamsEffects]),
     MaterialModule,
     HttpClientModule,
   ],
