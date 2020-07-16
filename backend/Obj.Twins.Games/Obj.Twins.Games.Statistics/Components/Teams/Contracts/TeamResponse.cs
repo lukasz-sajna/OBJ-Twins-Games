@@ -23,5 +23,7 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts
         public int MatchesPlayed { get; set; }
 
         public List<StreakResponse> Streak { get; set; }
+
+        public List<PlayerInTeamResponse> Players { get; set; }
     }
 }

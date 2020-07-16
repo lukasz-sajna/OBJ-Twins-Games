@@ -21,7 +21,8 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions
                 Loses = team.GetResultCounter(MatchResult.Lost),
                 WinRatio = team.GetTeamWinRatio(),
                 MatchesPlayed = team.TeamInMatches.Count,
-                Streak = team.GetTeamStreak()
+                Streak = team.GetTeamStreak(),
+                Players = team.GetPlayersInTeam()
             };
         }
 
@@ -40,6 +41,15 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions
             return team.TeamInMatches
                 .Select(x => new StreakResponse {MatchResult = x.Result, MatchFinishedAt = x.Match.MatchFinishedAt})
                 .OrderByDescending(x => x.MatchFinishedAt).Take(5).ToList();
+        }
+
+        private static List<PlayerInTeamResponse> GetPlayersInTeam(this Team team)
+        {
+            return team.TeamInMatches
+                .SelectMany(x => x.PlayerInTeamInMatches)
+                .Select(x => x.Player).Distinct()
+                .Select(x => new PlayerInTeamResponse {Id = x.Id, Name = x.SteamName, Avatar = x.SteamAvatarUri})
+                .ToList();
         }
 
     }
