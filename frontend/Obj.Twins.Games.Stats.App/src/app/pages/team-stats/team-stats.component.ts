@@ -28,4 +28,8 @@ export class TeamStatsComponent implements OnInit {
     console.log(`Open team details: ${teamId}`);
   }
 
+  public playerClicked(playerId: string): void {
+    console.log(`Open player details: ${playerId}`);
+  }
+
 }

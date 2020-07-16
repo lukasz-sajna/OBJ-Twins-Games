@@ -5,12 +5,21 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { tap, map } from 'rxjs/operators';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { MatchResult } from 'src/app/models/match-result.enum';
 
 @UntilDestroy()
 @Component({
   selector: 'app-team-stats-table',
   templateUrl: './team-stats-table.component.html',
-  styleUrls: ['./team-stats-table.component.scss']
+  styleUrls: ['./team-stats-table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class TeamStatsTableComponent implements OnInit, OnDestroy {
   @Input()
@@ -20,9 +29,16 @@ export class TeamStatsTableComponent implements OnInit, OnDestroy {
   public isLoading = false;
 
   @Output()
-  public rowClicked: EventEmitter<string> = new EventEmitter();
+  public showTeamDetails: EventEmitter<string> = new EventEmitter();
+
+  @Output()
+  public playerClicked: EventEmitter<string> = new EventEmitter();
+
+  public matchResult: typeof MatchResult = MatchResult;
 
   public displayedColumns: string[] = [];
+
+  public expandedElement: Team | null;
 
   public dataSource: MatTableDataSource<Team> = new MatTableDataSource<Team>([]);
 
@@ -34,7 +50,7 @@ export class TeamStatsTableComponent implements OnInit, OnDestroy {
   public sort: MatSort;
 
   public ngOnInit(): void {
-    this.displayedColumns = ['name', 'wins', 'draws', 'loses', 'winRatio', 'matchesPlayed'];
+    this.displayedColumns = ['name', 'wins', 'draws', 'loses', 'winRatio', 'matchesPlayed', 'streak'];
 
     this.teams.pipe(
       untilDestroyed(this),
@@ -47,8 +63,12 @@ export class TeamStatsTableComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void { }
 
-  public onRowClicked(teamId: string): void {
-    this.rowClicked.emit(teamId);
+  public onShowTeamDetailsClicked(teamId: string): void {
+    this.showTeamDetails.emit(teamId);
+  }
+
+  public onPlayerClicked(playerId: string): void {
+    this.playerClicked.emit(playerId);
   }
 
   public decimalToPercent(decimal: number): string {
@@ -57,6 +77,19 @@ export class TeamStatsTableComponent implements OnInit, OnDestroy {
 
   public flagUrl(flagCode: string): string {
     return `https://www.countryflags.io/${flagCode}/flat/64.png`;
+  }
+
+  public matchResultShortName(matchResult: MatchResult): string {
+    switch (matchResult) {
+      case MatchResult.Win:
+        return 'W';
+      case MatchResult.Draw:
+        return 'D';
+      case MatchResult.Lost:
+        return 'L';
+      default:
+        break;
+    }
   }
 
 }

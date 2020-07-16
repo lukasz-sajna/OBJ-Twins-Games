@@ -5,6 +5,7 @@
     class="container"
     [isLoading]="isLoading$ | async"
     [teams]="allTeams$"
-    (rowClicked)="rowClicked($event)">
+    (showTeamDetails)="rowClicked($event)"    
+    (playerClicked)="playerClicked($event)">
 </app-team-stats-table>
 </div>
