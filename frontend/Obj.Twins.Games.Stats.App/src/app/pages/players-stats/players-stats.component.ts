@@ -25,8 +25,8 @@ export class PlayersStatsComponent implements OnInit {
     this.store.dispatch(playersStatsRequested());
   }
 
-  public rowClicked(profileUrl: string): void {
-    window.open(profileUrl, '_blank');
+  public rowClicked(playerId: string): void {
+    console.log(`Open player details: ${playerId}`);
   }
 
   public get ContainerHeight(): string {

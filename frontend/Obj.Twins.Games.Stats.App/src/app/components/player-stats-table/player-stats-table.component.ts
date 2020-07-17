@@ -25,7 +25,7 @@ export class PlayerStatsTableComponent implements OnInit, OnDestroy {
   @Output()
   public rowClicked: EventEmitter<string> = new EventEmitter();
 
-public displayedColumns: string[] = [];
+  public displayedColumns: string[] = [];
 
   public dataSource: MatTableDataSource<PlayerInfo> = new MatTableDataSource<PlayerInfo>([]);
 
@@ -38,8 +38,8 @@ public displayedColumns: string[] = [];
 
   public ngOnInit(): void {
     this.displayedColumns = this.showMatchesPlayed
-    ? ['name', 'kills', 'assists', 'deaths', 'kdRatio', 'mvp', 'matchesPlayed', 'score']
-    : ['name', 'kills', 'assists', 'deaths', 'kdRatio', 'mvp', 'score'];
+      ? ['name', 'kills', 'assists', 'deaths', 'kdRatio', 'mvp', 'matchesPlayed', 'score']
+      : ['name', 'kills', 'assists', 'deaths', 'kdRatio', 'mvp', 'score'];
 
     this.playersData.pipe(
       untilDestroyed(this),
@@ -52,8 +52,8 @@ public displayedColumns: string[] = [];
 
   public ngOnDestroy(): void { }
 
-  public onRowClicked(profileUrl: string): void {
-    // this.rowClicked.emit(profileUrl);
+  public onRowClicked(playerId: string): void {
+    this.rowClicked.emit(playerId);
   }
 
 }

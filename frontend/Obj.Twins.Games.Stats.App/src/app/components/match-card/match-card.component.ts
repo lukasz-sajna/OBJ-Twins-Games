@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostBinding, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Match } from 'src/app/models/match';
 import { MapBackgroundService } from 'src/app/services/map-background.service';
-import { Team } from 'src/app/models/team';
+import { TeamInMatch } from 'src/app/models/team-in-match';
 
 @Component({
   selector: 'app-match-card',
@@ -25,11 +25,11 @@ export class MatchCardComponent {
     return `https://www.countryflags.io/${flagCode}/flat/64.png`;
   }
 
-  public get FirstTeam(): Team {
+  public get FirstTeam(): TeamInMatch {
     return this.match.teams[0];
   }
 
-  public get SecondTeam(): Team {
+  public get SecondTeam(): TeamInMatch {
     return this.match.teams[1];
   }
 }

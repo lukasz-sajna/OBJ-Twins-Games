@@ -74,6 +74,7 @@
       class="clickable"
       mat-row
       *matRowDef="let row; columns: displayedColumns"
+      (click)="onRowClicked(row.id)"
     ></tr>
   </table>
   <div *ngIf="(noData$ | async) && !isLoading" class="no-data">
