@@ -61,9 +61,19 @@ namespace Obj.Twins.Games.DataSync.Components.Commands
 
         private async Task<List<long>> GetMatchIdsToSync(CancellationToken cancellationToken)
         {
-            var serverMatchIds = await _serverStatsDbContext.Matches
-                .Select(x => x.MatchId)
-                .ToListAsync(cancellationToken);
+            var serverMatchIds = new List<long>();
+
+            try
+            {
+                serverMatchIds = await _serverStatsDbContext.Matches
+                    .Select(x => x.MatchId)
+                    .ToListAsync(cancellationToken);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
             var syncedMatchIds = await _statsDbContext.Matches.Select(x => x.OriginalMatchId)
                 .ToListAsync(cancellationToken);

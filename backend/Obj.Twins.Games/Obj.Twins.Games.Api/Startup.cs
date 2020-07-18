@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.HttpOverrides;
 using Obj.Twins.Games.Api.Config;
 using Obj.Twins.Games.Api.Extensions;
+using Obj.Twins.Games.Api.Helpers;
 using Obj.Twins.Games.DataSync;
 using Obj.Twins.Games.DataSync.Hubs;
 using Obj.Twins.Games.Demo.Client;
@@ -72,7 +73,8 @@ namespace Obj.Twins.Games.Api
 
 
             app.UseCustomSwagger();
-            app.UseHangfireDashboard(options: new DashboardOptions { StatsPollingInterval = 5000 });
+            app.UseHangfireDashboard(options: new DashboardOptions
+                {StatsPollingInterval = 5000, Authorization = new[] {new HangFireAuthorizationFilter()}});
 
             //app.UseHttpsRedirection();
 
