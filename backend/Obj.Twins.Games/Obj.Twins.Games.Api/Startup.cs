@@ -66,9 +66,13 @@ namespace Obj.Twins.Games.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCustomSwagger();
-                app.UseHangfireDashboard(options: new DashboardOptions {StatsPollingInterval = 5000});
+                //app.UseCustomSwagger();
+                //app.UseHangfireDashboard(options: new DashboardOptions {StatsPollingInterval = 5000});
             }
+
+
+            app.UseCustomSwagger();
+            app.UseHangfireDashboard(options: new DashboardOptions { StatsPollingInterval = 5000 });
 
             //app.UseHttpsRedirection();
 
