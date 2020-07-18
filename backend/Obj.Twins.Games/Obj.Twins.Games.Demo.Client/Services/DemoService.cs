@@ -31,7 +31,7 @@ namespace Obj.Twins.Games.Demo.Client.Services
             var matchDemo = demosList.Where(x =>
                     x.Map.Equals(map) && DateTime.Compare(x.Stop.Date, matchFinishDateTime.Date) == 0)
                 .OrderBy(x => x.Stop)
-                .FirstOrDefault(x => DateTime.Compare(x.Stop, matchFinishDateTime) >= 0);
+                .FirstOrDefault(x => DateTime.Compare(x.Stop, RemoveSecondsFromDateTime(matchFinishDateTime)) >= 0);
 
             return matchDemo?.Url;
         }
@@ -55,6 +55,13 @@ namespace Obj.Twins.Games.Demo.Client.Services
             }
 
             return demosList;
+        }
+
+        private DateTime RemoveSecondsFromDateTime(DateTime input)
+        {
+            return input.Second >= 30
+                ? new DateTime(input.Year, input.Month, input.Day, input.Hour, input.Minute + 1, 0)
+                : new DateTime(input.Year, input.Month, input.Day, input.Hour, input.Minute, 0);
         }
     }
 }
