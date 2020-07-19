@@ -32,11 +32,9 @@ namespace Obj.Twins.Games.DataSync.Components.Commands
             foreach (var match in matches)
             {
                 var demoUrl =_demoService.GetDemoUrlForMatch(match.Map, match.MatchFinishedAt);
+                
+                match.DemoUrl = demoUrl != null ? new Uri(demoUrl) : null;
 
-                if (demoUrl != null)
-                {
-                    match.DemoUrl = new Uri(demoUrl);
-                }
             }
 
             var isDataChanged = _statsDbContext.ChangeTracker.HasChanges();
