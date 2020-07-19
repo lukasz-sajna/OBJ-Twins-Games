@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -28,17 +27,14 @@ namespace Obj.Twins.Games.DataSync.Components.Commands
         }
         public async Task<Unit> Handle(SyncMatchesDemoCommand request, CancellationToken cancellationToken)
         {
-            var matchesWithoutDemoUrl = _statsDbContext.Matches.Where(x => x.DemoUrl == null);
+            var matches = _statsDbContext.Matches;
 
-            foreach (var matchWithoutDemoUrl in matchesWithoutDemoUrl)
+            foreach (var match in matches)
             {
-                var demoUrl =
-                    await _demoService.GetDemoUrlForMatch(matchWithoutDemoUrl.Map, matchWithoutDemoUrl.MatchFinishedAt);
+                var demoUrl =_demoService.GetDemoUrlForMatch(match.Map, match.MatchFinishedAt);
+                
+                match.DemoUrl = demoUrl != null ? new Uri(demoUrl) : null;
 
-                if (demoUrl != null)
-                {
-                    matchWithoutDemoUrl.DemoUrl = new Uri(demoUrl);
-                }
             }
 
             var isDataChanged = _statsDbContext.ChangeTracker.HasChanges();
