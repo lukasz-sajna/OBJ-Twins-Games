@@ -14,6 +14,8 @@ namespace Obj.Twins.Games.Demo.Client.Services
     {
         private readonly DemoClientSettings _demoClientSettings;
 
+        private readonly List<DemoData> _matchDemos = new List<DemoData>();
+
         public DemoService(IOptions<DemoClientSettings> demoClientSettings)
         {
             if (demoClientSettings == null)
@@ -24,21 +26,19 @@ namespace Obj.Twins.Games.Demo.Client.Services
             _demoClientSettings = demoClientSettings.Value;
         }
 
-        public async Task<string> GetDemoUrlForMatch(string map, DateTime matchFinishDateTime)
+        public string GetDemoUrlForMatch(string map, DateTime matchFinishDateTime)
         {
-            var demosList = await GetDemoListAsync();
-
-            var matchDemo = demosList.Where(x =>
-                    x.Map.Equals(map) && DateTime.Compare(x.Stop.Date, matchFinishDateTime.Date) == 0)
+            var matchDemo = _matchDemos
+                .Where(x => x.Map.Equals(map) && x.Stop.Date.CompareTo(matchFinishDateTime.Date) == 0)
                 .OrderBy(x => x.Stop)
-                .FirstOrDefault(x => DateTime.Compare(x.Stop, RemoveSecondsFromDateTime(matchFinishDateTime)) >= 0);
+                .FirstOrDefault(x => x.Stop.CompareTo(RemoveSecondsFromDateTime(matchFinishDateTime)) >= 0);
 
             return matchDemo?.Url;
         }
 
-        private async Task<List<DemoData>> GetDemoListAsync()
+        public async Task RefreshMatchDemoList()
         {
-            var demosList = new List<DemoData>();
+            _matchDemos.Clear();
 
             using var httpClient = new HttpClient();
             var json = await httpClient.GetStringAsync(_demoClientSettings.Url);
@@ -50,14 +50,12 @@ namespace Obj.Twins.Games.Demo.Client.Services
                 foreach (var item in jsonDemoData)
                 {
                     var demos = JsonConvert.DeserializeObject<List<DemoData>>(item.Value.ToString());
-                    demosList.AddRange(demos);
+                    _matchDemos.AddRange(demos);
                 }
             }
-
-            return demosList;
         }
 
-        private DateTime RemoveSecondsFromDateTime(DateTime input)
+        private static DateTime RemoveSecondsFromDateTime(DateTime input)
         {
             return input.Second >= 30
                 ? new DateTime(input.Year, input.Month, input.Day, input.Hour, input.Minute + 1, 0)
