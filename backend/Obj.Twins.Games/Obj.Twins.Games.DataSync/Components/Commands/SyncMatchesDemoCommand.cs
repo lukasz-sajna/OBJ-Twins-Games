@@ -28,6 +28,7 @@ namespace Obj.Twins.Games.DataSync.Components.Commands
         public async Task<Unit> Handle(SyncMatchesDemoCommand request, CancellationToken cancellationToken)
         {
             var matches = _statsDbContext.Matches;
+            await _demoService.RefreshMatchDemoList();
 
             foreach (var match in matches)
             {
