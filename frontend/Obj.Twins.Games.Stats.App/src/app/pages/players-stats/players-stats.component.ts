@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { PlayerInfo } from 'src/app/models/player-info';
 import { Store } from '@ngrx/store';
 import { playersStatsRequested } from 'src/app/store/actions/stats.actions';
-import { playersStatsSelector, isLoadingSelector } from 'src/app/store/selectors/stats-state.selector';
+import { playersStatsSelector, isLoadingSelector, playersStatsPerMatchSelector } from 'src/app/store/selectors/stats-state.selector';
 import { StatsState } from 'src/app/store/state/stats-state';
 import { HeightCalcService } from 'src/app/services/height-calc.service';
 
@@ -14,10 +14,12 @@ import { HeightCalcService } from 'src/app/services/height-calc.service';
 })
 export class PlayersStatsComponent implements OnInit {
   public playersData$: Observable<PlayerInfo[]>;
+  public playersDataPerMatch$: Observable<PlayerInfo[]>;
   public isLoading$: Observable<boolean>;
 
   constructor(private store: Store<StatsState>) {
     this.playersData$ = this.store.select(playersStatsSelector);
+    this.playersDataPerMatch$ = this.store.select(playersStatsPerMatchSelector);
     this.isLoading$ = this.store.select(isLoadingSelector);
   }
 
