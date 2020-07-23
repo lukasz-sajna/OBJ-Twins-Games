@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Obj.Twins.Games.Statistics.Components.Common;
+using Obj.Twins.Games.Statistics.Components.Matches.Contracts;
+using Obj.Twins.Games.Statistics.Components.Matches.Enums;
 using Obj.Twins.Games.Statistics.Persistence.Models;
 
 namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
@@ -35,6 +39,81 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
                 Avatar = z.First().Avatar,
                 MatchesPlayed = z.Count()
             }).ToList();
+        }
+
+        internal static PlayerDetailsResponse ToPlayerDetailsResponse(this Player player, List<Team> teams, List<Match> matches)
+        {
+            return new PlayerDetailsResponse
+            {
+                Name = player.SteamName,
+                Avatar = player.SteamAvatarUri,
+                SteamProfileUrl = player.SteamProfileUrl,
+                Teams = teams
+                    .Select(x => new PlayerTeamResponse {Id = x.Id, Name = x.Name})
+                    .ToList(),
+                Matches = matches.Select(x => new PlayerMatchResponse
+                {
+                    Id = x.Id,
+                    MatchFinishedAt = x.MatchFinishedAt,
+                    Map = x.Map,
+                    Teams = x.TeamInMatches.Select(tim=> new TeamInMatchResponse{Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
+                    Result = x.TeamInMatches.First(tim => tim.PlayerInTeamInMatches.Any(p => p.PlayerId.Equals(player.Id))).Result
+                }).OrderBy(o=>o.MatchFinishedAt).ToList(),
+                Kills = player.PlayerInTeamInMatches
+                    .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Kills})
+                    .OrderBy(o => o.Date).ToList(),
+                Assists = player.PlayerInTeamInMatches
+                    .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Assists})
+                    .OrderBy(o => o.Date).ToList(),
+                Deaths = player.PlayerInTeamInMatches
+                    .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Deaths})
+                    .OrderBy(o => o.Date).ToList(),
+                Mvps = player.PlayerInTeamInMatches
+                    .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Mvp})
+                    .OrderBy(o => o.Date).ToList(),
+                Scores = player.PlayerInTeamInMatches
+                    .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Score})
+                    .OrderBy(o => o.Date).ToList(),
+                KdRatios = player.PlayerInTeamInMatches.Select(x => new StatisticResponse
+                        {Date = x.Match.MatchFinishedAt, Value = Math.Round((double) x.Kills / x.Deaths, 2)})
+                    .OrderBy(o => o.Date).ToList(),
+                Streak = player.PlayerInTeamInMatches.GetPlayerStreak(),
+                LongestWinStreak = player.PlayerInTeamInMatches.GetLongestWinStreak()
+            };
+        }
+
+        private static List<StreakResponse> GetPlayerStreak(this ICollection<PlayerInTeamInMatch> playerInTeamInMatches)
+        {
+            return playerInTeamInMatches
+                .Select(x => new StreakResponse
+                    {MatchResult = x.TeamInMatch.Result, MatchFinishedAt = x.Match.MatchFinishedAt})
+                .OrderByDescending(o=>o.MatchFinishedAt)
+                .Take(5)
+                .ToList();
+        }
+
+        private static int GetLongestWinStreak(this ICollection<PlayerInTeamInMatch> playerInTeamInMatches)
+        {
+            var matches = playerInTeamInMatches.GetPlayerStreak();
+
+            var longestStreak = 0;
+            var currentStreak = 0;
+
+            foreach (var match in matches)
+            {
+                if (match.MatchResult.Equals(MatchResult.Win))
+                {
+                    currentStreak++;
+                    if (currentStreak > longestStreak)
+                        longestStreak = currentStreak;
+
+                    continue;
+                }
+
+                currentStreak = 0;
+            }
+
+            return longestStreak;
         }
     }
 }

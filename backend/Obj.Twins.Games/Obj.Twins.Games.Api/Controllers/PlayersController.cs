@@ -23,9 +23,11 @@ namespace Obj.Twins.Games.Api.Controllers
         }
 
         [HttpGet("PlayerDetails")]
-        public IActionResult GetPlayerDetails(Guid id)
+        public async Task<IActionResult> GetPlayerDetails(Guid id)
         {
-            return Ok();
+            var result = await _mediator.Send(new GetPlayerDetailsQuery {Id = id});
+
+            return Ok(result);
         }
     }
 }

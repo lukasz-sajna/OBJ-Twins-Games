@@ -12,7 +12,11 @@ namespace Obj.Twins.Games.Statistics.Persistence.Models
 
         public Guid TeamId { get; set; }
 
+        public Team Team { get; set; }
+
         public Guid MatchId { get; set; }
+
+        public Match Match { get; set; }
 
         public TeamInMatch TeamInMatch { get; set; }
 
