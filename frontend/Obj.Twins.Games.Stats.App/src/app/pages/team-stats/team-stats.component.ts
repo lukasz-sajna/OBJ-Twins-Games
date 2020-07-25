@@ -5,6 +5,7 @@ import { teamsStatsRequested } from 'src/app/store/actions/teams.actions';
 import { Team } from 'src/app/models/team';
 import { Observable } from 'rxjs';
 import { allTeamsSelector, isLoadingSelector } from 'src/app/store/selectors/teams-state.selector';
+import { openPlayerDetails } from 'src/app/store/actions/player.actions';
 
 @Component({
   selector: 'app-team-stats',
@@ -29,7 +30,7 @@ export class TeamStatsComponent implements OnInit {
   }
 
   public playerClicked(playerId: string): void {
-    console.log(`Open player details: ${playerId}`);
+    this.store.dispatch(openPlayerDetails({ id: playerId }));
   }
 
 }

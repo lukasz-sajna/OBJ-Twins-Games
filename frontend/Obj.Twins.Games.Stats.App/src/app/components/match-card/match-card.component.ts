@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostBinding, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Match } from 'src/app/models/match';
 import { MapBackgroundService } from 'src/app/services/map-background.service';
 import { TeamInMatch } from 'src/app/models/team-in-match';
+import { MatchResult } from 'src/app/models/match-result.enum';
+import { PlayerMatch } from 'src/app/models/player-match';
 
 @Component({
   selector: 'app-match-card',
@@ -10,10 +12,15 @@ import { TeamInMatch } from 'src/app/models/team-in-match';
 })
 export class MatchCardComponent {
   @Input()
-  public match: Match;
+  public match: PlayerMatch;
+
+  @Input()
+  public resultGlow: boolean;
 
   @Output()
   public clicked: EventEmitter<string> = new EventEmitter();
+
+  public matchResult: typeof MatchResult = MatchResult;
 
   constructor(private backgroundService: MapBackgroundService) { }
 

@@ -58,6 +58,9 @@ namespace Obj.Twins.Games.Statistics.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -116,6 +119,8 @@ namespace Obj.Twins.Games.Statistics.Migrations
 
                     b.HasKey("PlayerId", "TeamId", "MatchId");
 
+                    b.HasIndex("MatchId");
+
                     b.HasIndex("TeamId", "MatchId");
 
                     b.ToTable("PlayerInTeamInMatch");
@@ -166,9 +171,21 @@ namespace Obj.Twins.Games.Statistics.Migrations
 
             modelBuilder.Entity("Obj.Twins.Games.Statistics.Persistence.Models.PlayerInTeamInMatch", b =>
                 {
+                    b.HasOne("Obj.Twins.Games.Statistics.Persistence.Models.Match", "Match")
+                        .WithMany()
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Obj.Twins.Games.Statistics.Persistence.Models.Player", "Player")
                         .WithMany("PlayerInTeamInMatches")
                         .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Obj.Twins.Games.Statistics.Persistence.Models.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

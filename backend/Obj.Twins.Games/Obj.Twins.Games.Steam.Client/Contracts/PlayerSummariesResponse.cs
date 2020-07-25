@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Obj.Twins.Games.Steam.Client.Models;
 
@@ -25,7 +26,23 @@ namespace Obj.Twins.Games.Steam.Client.Contracts
                 PersonState = x.PersonaState,
                 Avatar = x.AvatarFull,
                 ProfileUrl = x.ProfileUrl
-            }).SingleOrDefault();
+            }).FirstOrDefault();
+        }
+
+        public static SteamStatusPlayerDataResponse ToSteamStatusPlayerDataResponse(
+            this PlayerSummariesResponse playerSummaries)
+        {
+            return playerSummaries.Response.Players.Select(x => new SteamStatusPlayerDataResponse
+            {
+                Status = x.PersonaState,
+                LastOnline = x.LastLogOff.FromUnixTime()
+            }).FirstOrDefault();
+        }
+
+        private static DateTime FromUnixTime(this long unixTime)
+        {
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return epoch.AddSeconds(unixTime);
         }
     }
 }

@@ -56,6 +56,7 @@ namespace Obj.Twins.Games.DataSync.Components.Commands
             player.SteamName = playerSteamData.SteamName;
             player.SteamProfileUrl = new Uri(playerSteamData.ProfileUrl);
             player.SteamAvatarUri = new Uri(playerSteamData.Avatar);
+            player.Country = playerSteamData.LocCountryCode;
         }
     }
 }

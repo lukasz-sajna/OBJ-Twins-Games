@@ -8,6 +8,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -20,6 +23,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatToolbarModule,
@@ -31,6 +37,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatCheckboxModule,
   ]
 })
 export class MaterialModule { }

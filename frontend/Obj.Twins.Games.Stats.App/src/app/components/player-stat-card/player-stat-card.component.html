@@ -1,0 +1,16 @@
+<mat-card>
+    <ng-container *ngIf="!customContent">
+        <div class="row">
+            <div class="col">
+                <p class="text-center h2">{{value}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <p class="text-center">{{text}}</p>
+            </div>
+        </div>
+    </ng-container>
+    <ng-content *ngIf="customContent"> </ng-content>
+</mat-card>

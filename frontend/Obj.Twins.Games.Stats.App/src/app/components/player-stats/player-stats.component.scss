@@ -1,0 +1,15 @@
+  .streak-{
+    &won{
+      color: green;
+    }
+    &draw{
+      color: orange;
+    }
+    &lost{
+      color: red;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+  }

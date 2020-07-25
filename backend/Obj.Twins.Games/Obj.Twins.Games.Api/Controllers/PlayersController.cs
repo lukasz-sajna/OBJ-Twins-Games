@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Obj.Twins.Games.DataSync.Components.Queries;
 using Obj.Twins.Games.Statistics.Components.Players.Queries;
 
 namespace Obj.Twins.Games.Api.Controllers
@@ -22,10 +23,20 @@ namespace Obj.Twins.Games.Api.Controllers
             return Ok(await _mediator.Send(new GetPlayersQuery()));
         }
 
-        [HttpGet("PlayerDetails")]
-        public IActionResult GetPlayerDetails(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPlayerDetails(Guid id)
         {
-            return Ok();
+            var result = await _mediator.Send(new GetPlayerDetailsQuery {Id = id});
+
+            return Ok(result);
+        }
+
+        [HttpGet("{id}/status")]
+        public async Task<IActionResult> GetPlayerStatus(Guid id)
+        {
+            var result = await _mediator.Send(new GetPlayerSteamStatusQuery {Id = id});
+
+            return Ok(result);
         }
     }
 }

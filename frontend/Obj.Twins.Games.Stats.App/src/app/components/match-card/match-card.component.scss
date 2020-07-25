@@ -8,6 +8,24 @@
   backdrop-filter: blur(10px);
 }
 
+.result-glow- {  
+  &won{
+    -webkit-box-shadow: inset 0px 0px 13px 6px rgba(0,128,0,0.78);
+    -moz-box-shadow: inset 0px 0px 13px 6px rgba(0,128,0,0.78);
+    box-shadow: inset 0px 0px 13px 6px rgba(0,128,0,0.78);
+  }
+  &draw{
+    -webkit-box-shadow: inset 0px 0px 13px 6px rgba(255,165,0,0.78);
+    -moz-box-shadow: inset 0px 0px 13px 6px rgba(255, 165, 50, 0.78);
+    box-shadow: inset 0px 0px 13px 6px rgba(255,165,0,0.78);
+  }
+  &lost{
+    -webkit-box-shadow: inset 0px 0px 13px 6px rgba(255, 0, 0,0.78);
+    -moz-box-shadow: inset 0px 0px 13px 6px rgba(255, 0, 0, 0.78);
+    box-shadow: inset 0px 0px 13px 6px rgba(255, 0, 0,0.78);
+  }
+}
+
 .font-team {
   font-family: "IndustryW00-Bold";
   font-size: 30px;

@@ -11,5 +11,8 @@ namespace Obj.Twins.Games.Steam.Client.Contracts
         public string ProfileUrl { get; set; }
 
         public string Avatar { get; set; }
+
+        public string LastLogOff { get; set; }
+        public string LocCountryCode { get; set; }
     }
 }
