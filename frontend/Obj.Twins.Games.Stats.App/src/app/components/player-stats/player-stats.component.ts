@@ -58,13 +58,11 @@ export class PlayerStatsComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.fullChartData = [];
-    this.chartData = [];
   }
 
   public ngOnChanges(): void {
     this.prepareFullChartData();
-    this.setChartData();
+    this.chartColumnsChanged();
   }
 
   public winRateDecimalToPercent(input: number): string {
@@ -85,6 +83,7 @@ export class PlayerStatsComponent implements OnInit, OnChanges {
   }
 
   public chartColumnsChanged(): void {
+    this.dataColumns = this.prepareDataColumns();
     this.chartData = this.setChartData();
   }
 
@@ -103,8 +102,7 @@ export class PlayerStatsComponent implements OnInit, OnChanges {
     }
   }
 
-  private setChartData(): void {
-    this.prepareDataColumns();
+  private setChartData(): any {
     const columnindexesToRemove = this.getColumnIndexesToRemove();
     const data = JSON.parse(JSON.stringify(this.fullChartData));
 
@@ -114,26 +112,28 @@ export class PlayerStatsComponent implements OnInit, OnChanges {
       });
     }
 
-    this.chartData = data;
+    return data;
   }
 
-  private prepareDataColumns(): void {
-    this.dataColumns = ['Date'];
+  private prepareDataColumns(): string[] {
+    const columns = ['Date'];
     if (this.chartColumnsSelection.kdRatio) {
-      this.dataColumns.push('K/D Ratio');
+      columns.push('K/D Ratio');
     }
     if (this.chartColumnsSelection.kills) {
-      this.dataColumns.push('Kills');
+      columns.push('Kills');
     }
     if (this.chartColumnsSelection.assists) {
-      this.dataColumns.push('Assists');
+      columns.push('Assists');
     }
     if (this.chartColumnsSelection.deaths) {
-      this.dataColumns.push('Deaths');
+      columns.push('Deaths');
     }
     if (this.chartColumnsSelection.mvps) {
-      this.dataColumns.push('Mvps');
+      columns.push('Mvps');
     }
+
+    return columns;
   }
 
   private getColumnIndexesToRemove(): number[] {
