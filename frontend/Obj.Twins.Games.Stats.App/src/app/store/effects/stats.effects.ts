@@ -4,9 +4,6 @@ import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import {
-    playersStatsRequestedSuccess,
-    playersStatsRequestedFailure,
-    playersStatsRequested,
     matchListRequested,
     matchListRequestedSuccess,
     matchListRequestedFailure,
@@ -17,8 +14,7 @@ import {
 } from '../actions/stats.actions';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
-import { MATCH_ROUTE } from 'src/app/routes';
-import { PlayersService } from 'src/app/services/players.service';
+import { MATCHES_ROUTE } from 'src/app/routes';
 import { MatchesService } from 'src/app/services/matches.service';
 
 @Injectable()
@@ -26,21 +22,10 @@ export class StatsEffects {
     constructor(
         private actions$: Actions,
         private statsDataService: StatsDataService,
-        private playersService: PlayersService,
         private matchesService: MatchesService,
         private toastService: ToastService,
         private router: Router,
     ) { }
-
-    public playersStatsRequested$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(playersStatsRequested),
-            switchMap(() =>
-                this.playersService.getPlayersStats().pipe(
-                    map(data => playersStatsRequestedSuccess({ response: data })),
-                    catchError(error => of(playersStatsRequestedFailure({ error }))))
-            ),
-        ));
 
     public matchListRequested$ = createEffect(() =>
         this.actions$.pipe(
@@ -54,7 +39,7 @@ export class StatsEffects {
 
     public fetchDataFailure$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(playersStatsRequestedFailure, matchListRequestedFailure, matchDetailsRequestedFailure),
+            ofType(matchListRequestedFailure, matchDetailsRequestedFailure),
             tap(() => this.toastService.showToast('Failed to fetch data. Please try again'))
         ), { dispatch: false }
     );
@@ -62,7 +47,7 @@ export class StatsEffects {
     public openMatchDetails$ = createEffect(() =>
         this.actions$.pipe(
             ofType(openMatchDetails),
-            tap(action => this.router.navigate([MATCH_ROUTE, action.matchId])),
+            tap(action => this.router.navigate([MATCHES_ROUTE, action.matchId])),
             map(action => matchDetailsRequested({ matchId: action.matchId }))
         )
     );

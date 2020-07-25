@@ -27,6 +27,14 @@ import { TeamStatsComponent } from './pages/team-stats/team-stats.component';
 import { TeamStatsTableComponent } from './components/team-stats-table/team-stats-table.component';
 import { TeamsEffects } from './store/effects/teams.effects';
 import { teamsFeatureKey, teamsReducer } from './store/reducers/teams.reducer';
+import { PlayerDetailsComponent } from './pages/player-details/player-details.component';
+import { PlayersEffects } from './store/effects/players.effects';
+import { playersFeatureKey, playersReducer } from './store/reducers/players.reducer';
+import { PlayerInfoComponent } from './components/player-info/player-info.component';
+import { PlayerStatsComponent } from './components/player-stats/player-stats.component';
+import { PlayerStatCardComponent } from './components/player-stat-card/player-stat-card.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,7 +48,11 @@ import { teamsFeatureKey, teamsReducer } from './store/reducers/teams.reducer';
     MatchDetailsCardComponent,
     MatchDetailsTableComponent,
     TeamStatsComponent,
-    TeamStatsTableComponent
+    TeamStatsTableComponent,
+    PlayerDetailsComponent,
+    PlayerInfoComponent,
+    PlayerStatsComponent,
+    PlayerStatCardComponent
   ],
   imports: [
     BrowserModule,
@@ -55,11 +67,14 @@ import { teamsFeatureKey, teamsReducer } from './store/reducers/teams.reducer';
     }),
     StoreModule.forFeature(statsFeatureKey, playerStatsReducer),
     StoreModule.forFeature(teamsFeatureKey, teamsReducer),
+    StoreModule.forFeature(playersFeatureKey, playersReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot({ routerState: RouterState.Minimal }),
-    EffectsModule.forRoot([StatsEffects, HeaderEffects, TeamsEffects]),
+    EffectsModule.forRoot([StatsEffects, HeaderEffects, TeamsEffects, PlayersEffects]),
     MaterialModule,
     HttpClientModule,
+    GoogleChartsModule.forRoot({ version: '49' }),
+    FormsModule
   ],
   providers: [
     { provide: API_URL, useValue: environment.apiUrl },

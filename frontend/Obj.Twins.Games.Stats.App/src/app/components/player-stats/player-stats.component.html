@@ -1,0 +1,80 @@
+<div class="row pb-3">
+    <div class="col-sm">
+        <app-player-stat-card [value]="playerInfo.matchesPlayed" text="Matches"></app-player-stat-card>
+    </div>
+    <div class="col-sm">
+        <app-player-stat-card [value]="playerInfo.wins" text="Wins"></app-player-stat-card>
+    </div>
+    <div class="col-sm">
+        <app-player-stat-card [value]="winRateDecimalToPercent(playerInfo.winRate)" text="Win Rate">
+        </app-player-stat-card>
+    </div>
+    <div class="col-sm">
+        <app-player-stat-card [value]="playerInfo.kdRatio" text="Average K/D Ratio"></app-player-stat-card>
+    </div>
+    <div class="col-sm">
+        <app-player-stat-card [customContent]="true">
+            <div class="row" style="min-height: 50px;">
+                <div class="col mt-1 text-center" style="padding-top: 5px;">
+                    <span class="d-inline font-weight-bold h5" [ngClass]="{'streak-won': matchResult.Win === item.matchResult,
+                                'streak-draw':  matchResult.Draw === item.matchResult,
+                                'streak-lost':  matchResult.Lost === item.matchResult
+                            }" *ngFor="let item of playerInfo.streak">
+                        {{ matchResultShortName(item.matchResult) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <p class="text-center">Recent Results</p>
+                </div>
+            </div>
+        </app-player-stat-card>
+    </div>
+    <div class="col-sm">
+        <app-player-stat-card [value]="playerInfo.longestWinStreak" text="Longest Win Streak"></app-player-stat-card>
+    </div>
+</div>
+<div class="row">
+    <ng-container *ngIf="isLoading; else chart">
+        Loading..
+    </ng-container>
+    <ng-template #chart>
+        <div class="col-10">
+            <google-chart style="width: 100%;" [data]="chartData" [dynamicResize]="true" [type]="'LineChart'"
+                [columns]="dataColumns" [options]="chartOptions"></google-chart>
+        </div>
+        <div class="col-2 mt-3">
+            <ul>
+                <li>
+                    <mat-checkbox color="primary" [disabled]="DisableChartFilter && chartColumnsSelection.kdRatio"
+                        [(ngModel)]="chartColumnsSelection.kdRatio" (ngModelChange)="chartColumnsChanged()">K/D Ratio
+                    </mat-checkbox>
+                </li>
+                <li>
+                    <mat-checkbox color="primary" [disabled]="DisableChartFilter && chartColumnsSelection.kills"
+                        [(ngModel)]="chartColumnsSelection.kills" (ngModelChange)="chartColumnsChanged()">Kills
+                    </mat-checkbox>
+                </li>
+                <li>
+                    <mat-checkbox color="primary" [disabled]="DisableChartFilter && chartColumnsSelection.assists"
+                        [(ngModel)]="chartColumnsSelection.assists" (ngModelChange)="chartColumnsChanged()">Assists
+                    </mat-checkbox>
+                </li>
+                <li>
+                    <mat-checkbox color="primary" [disabled]="DisableChartFilter && chartColumnsSelection.deaths"
+                        [(ngModel)]="chartColumnsSelection.deaths" (ngModelChange)="chartColumnsChanged()">Deaths
+                    </mat-checkbox>
+                </li>
+                <li>
+                    <mat-checkbox color="primary" [disabled]="DisableChartFilter && chartColumnsSelection.mvps"
+                        [(ngModel)]="chartColumnsSelection.mvps" (ngModelChange)="chartColumnsChanged()">Mvps
+                    </mat-checkbox>
+                </li>
+            </ul>
+        </div>
+    </ng-template>
+
+
+</div>

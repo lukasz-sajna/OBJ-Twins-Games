@@ -6,7 +6,7 @@
     </mat-tab>
     <mat-tab label="Average per match">
       <app-player-stats-table class="container" [isLoading]="isLoading$ | async" [playersData]="playersDataPerMatch$"
-        [showMatchesPlayed]="false" (rowClicked)="rowClicked($event)"></app-player-stats-table>
+        [showMatchesPlayed]="true" (rowClicked)="rowClicked($event)"></app-player-stats-table>
     </mat-tab>
   </mat-tab-group>
 </div>

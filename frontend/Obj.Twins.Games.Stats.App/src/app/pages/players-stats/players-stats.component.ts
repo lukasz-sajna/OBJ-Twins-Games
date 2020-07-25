@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PlayerInfo } from 'src/app/models/player-info';
 import { Store } from '@ngrx/store';
-import { playersStatsRequested } from 'src/app/store/actions/stats.actions';
-import { playersStatsSelector, isLoadingSelector, playersStatsPerMatchSelector } from 'src/app/store/selectors/stats-state.selector';
+import { isLoadingSelector } from 'src/app/store/selectors/stats-state.selector';
 import { StatsState } from 'src/app/store/state/stats-state';
-import { HeightCalcService } from 'src/app/services/height-calc.service';
+import { openPlayerDetails, playersStatsRequested } from 'src/app/store/actions/player.actions';
+import { allPlayersSelector, playersStatsPerMatchSelector } from 'src/app/store/selectors/players-state.selector';
 
 @Component({
   selector: 'app-players-stats',
@@ -18,7 +18,7 @@ export class PlayersStatsComponent implements OnInit {
   public isLoading$: Observable<boolean>;
 
   constructor(private store: Store<StatsState>) {
-    this.playersData$ = this.store.select(playersStatsSelector);
+    this.playersData$ = this.store.select(allPlayersSelector);
     this.playersDataPerMatch$ = this.store.select(playersStatsPerMatchSelector);
     this.isLoading$ = this.store.select(isLoadingSelector);
   }
@@ -28,7 +28,7 @@ export class PlayersStatsComponent implements OnInit {
   }
 
   public rowClicked(playerId: string): void {
-    console.log(`Open player details: ${playerId}`);
+    this.store.dispatch(openPlayerDetails({id: playerId}));
   }
 
   public get ContainerHeight(): string {

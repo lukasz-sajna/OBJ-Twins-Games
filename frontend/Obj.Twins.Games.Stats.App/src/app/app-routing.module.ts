@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MATCHES_ROUTE, EMPTY_ROUTE, ALL_REMAINING_ROUTES, PLAYERS_ROUTE, TEAMS_RTOUTE, MATCH_ROUTE } from './routes';
+import { MATCHES_ROUTE, EMPTY_ROUTE, ALL_REMAINING_ROUTES, PLAYERS_ROUTE, TEAMS_RTOUTE} from './routes';
 import { PlayersStatsComponent } from './pages/players-stats/players-stats.component';
 import { MatchComponent } from './pages/match/match.component';
 import { MatchDetailsComponent } from './pages/match-details/match-details.component';
 import { TeamStatsComponent } from './pages/team-stats/team-stats.component';
+import { PlayerDetailsComponent } from './pages/player-details/player-details.component';
 
 
 const routes: Routes = [
@@ -15,10 +16,13 @@ const routes: Routes = [
     path: PLAYERS_ROUTE, component: PlayersStatsComponent
   },
   {
+    path: `${PLAYERS_ROUTE}/:id`, component: PlayerDetailsComponent
+  },
+  {
     path: TEAMS_RTOUTE, component: TeamStatsComponent
   },
   {
-    path: `${MATCH_ROUTE}/:id`, component: MatchDetailsComponent
+    path: `${MATCHES_ROUTE}/:id`, component: MatchDetailsComponent
   },
   {
     path: EMPTY_ROUTE,
