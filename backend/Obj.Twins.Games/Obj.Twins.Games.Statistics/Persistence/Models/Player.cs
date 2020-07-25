@@ -20,5 +20,7 @@ namespace Obj.Twins.Games.Statistics.Persistence.Models
         public ICollection<PlayerInTeamInMatch> PlayerInTeamInMatches { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public string Country { get; set; }
     }
 }

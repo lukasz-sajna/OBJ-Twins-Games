@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Obj.Twins.Games.Statistics.Persistence;
 
 namespace Obj.Twins.Games.Statistics.Migrations
 {
     [DbContext(typeof(StatisticsDbContext))]
-    partial class StatisticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200724140206_AddCountryColumnForPlayer")]
+    partial class AddCountryColumnForPlayer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

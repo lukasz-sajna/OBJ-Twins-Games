@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Obj.Twins.Games.Statistics.Components.Common;
 using Obj.Twins.Games.Statistics.Components.Matches.Enums;
+using Obj.Twins.Games.Statistics.Components.Teams.Contracts;
 
 namespace Obj.Twins.Games.Statistics.Components.Players.Contracts
 {

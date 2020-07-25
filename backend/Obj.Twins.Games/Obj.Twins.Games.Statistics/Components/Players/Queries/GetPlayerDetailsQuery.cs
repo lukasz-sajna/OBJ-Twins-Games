@@ -42,6 +42,7 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Queries
                 .Include(t => t.NameFromPlayer)
                 .Include(t => t.TeamInMatches)
                 .ThenInclude(tim => tim.PlayerInTeamInMatches)
+                .ThenInclude(ptm => ptm.Player)
                 .Where(x => x.TeamInMatches.Any(z => z.PlayerInTeamInMatches.Any(p => p.PlayerId.Equals(request.Id))))
                 .ToListAsync(cancellationToken);
 

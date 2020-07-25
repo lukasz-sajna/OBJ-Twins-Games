@@ -12,7 +12,7 @@ namespace Obj.Twins.Games.Steam.Client.Models
         public string Avatar { get; set; }
         public string AvatarMedium { get; set; }
         public string AvatarFull { get; set; }
-        public int LastLogOff { get; set; }
+        public long LastLogOff { get; set; }
         public SteamPersonState PersonaState { get; set; }
         public string PrimaryClanId { get; set; }
         public int TimeCreated { get; set; }

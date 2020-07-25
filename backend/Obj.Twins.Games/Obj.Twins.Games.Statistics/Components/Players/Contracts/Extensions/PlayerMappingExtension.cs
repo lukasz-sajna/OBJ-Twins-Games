@@ -4,6 +4,8 @@ using System.Linq;
 using Obj.Twins.Games.Statistics.Components.Common;
 using Obj.Twins.Games.Statistics.Components.Matches.Contracts;
 using Obj.Twins.Games.Statistics.Components.Matches.Enums;
+using Obj.Twins.Games.Statistics.Components.Teams.Contracts;
+using Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions;
 using Obj.Twins.Games.Statistics.Persistence.Models;
 
 namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
@@ -48,9 +50,7 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
                 Name = player.SteamName,
                 Avatar = player.SteamAvatarUri,
                 SteamProfileUrl = player.SteamProfileUrl,
-                Teams = teams
-                    .Select(x => new PlayerTeamResponse {Id = x.Id, Name = x.Name})
-                    .ToList(),
+                Teams = teams.Select(x => x.ToPlayerTeamResponse(player.Id)).ToList(),
                 Matches = matches.Select(x => new PlayerMatchResponse
                 {
                     Id = x.Id,
@@ -58,7 +58,7 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
                     Map = x.Map,
                     Teams = x.TeamInMatches.Select(tim=> new TeamInMatchResponse{Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
                     Result = x.TeamInMatches.First(tim => tim.PlayerInTeamInMatches.Any(p => p.PlayerId.Equals(player.Id))).Result
-                }).OrderBy(o=>o.MatchFinishedAt).ToList(),
+                }).OrderByDescending(o=>o.MatchFinishedAt).ToList(),
                 Kills = player.PlayerInTeamInMatches
                     .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Kills})
                     .OrderBy(o => o.Date).ToList(),
@@ -82,6 +82,15 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
             };
         }
 
+        private static List<PlayerInTeamResponse> GetPlayersInTeam(this Team team, Guid playerId)
+        {
+            return team.TeamInMatches
+                .SelectMany(x => x.PlayerInTeamInMatches)
+                .Select(x => x.Player).Distinct()
+                .Select(x => new PlayerInTeamResponse { Id = x.Id, Name = x.SteamName, Avatar = x.SteamAvatarUri })
+                .ToList();
+        }
+
         private static List<StreakResponse> GetPlayerStreak(this ICollection<PlayerInTeamInMatch> playerInTeamInMatches)
         {
             return playerInTeamInMatches
@@ -94,7 +103,11 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
 
         private static int GetLongestWinStreak(this ICollection<PlayerInTeamInMatch> playerInTeamInMatches)
         {
-            var matches = playerInTeamInMatches.GetPlayerStreak();
+            var matches = playerInTeamInMatches
+                .Select(x => new StreakResponse
+                    {MatchResult = x.TeamInMatch.Result, MatchFinishedAt = x.Match.MatchFinishedAt})
+                .OrderByDescending(o => o.MatchFinishedAt)
+                .ToList();
 
             var longestStreak = 0;
             var currentStreak = 0;
