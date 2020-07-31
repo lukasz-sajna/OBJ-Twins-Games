@@ -60,7 +60,7 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
                     Teams = x.TeamInMatches.Select(tim => new TeamInMatchResponse
                         {Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
                     Result = x.TeamInMatches
-                        .First(tim => tim.PlayerInTeamInMatches.Any(p => p.PlayerId.Equals(player.Id))).Result
+                        .First(tim => tim.PlayerInTeamInMatches != null).Result
                 }).OrderByDescending(o => o.MatchFinishedAt).ToList(),
                 Kills = player.PlayerInTeamInMatches
                     .Where(x => !x.Match.IsDeleted)
