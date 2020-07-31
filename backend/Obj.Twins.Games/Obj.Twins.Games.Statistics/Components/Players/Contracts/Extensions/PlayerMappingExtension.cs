@@ -50,35 +50,46 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
                 Name = player.SteamName,
                 Avatar = player.SteamAvatarUri,
                 SteamProfileUrl = player.SteamProfileUrl,
-                Teams = teams.Select(x => x.ToPlayerTeamResponse(player.Id)).ToList(),
+                Teams = teams.Where(p => p.TeamInMatches.All(x => !x.Match.IsDeleted))
+                    .Select(x => x.ToPlayerTeamResponse(player.Id)).ToList(),
                 Matches = matches.Select(x => new PlayerMatchResponse
                 {
                     Id = x.Id,
                     MatchFinishedAt = x.MatchFinishedAt,
                     Map = x.Map,
-                    Teams = x.TeamInMatches.Select(tim=> new TeamInMatchResponse{Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
-                    Result = x.TeamInMatches.First(tim => tim.PlayerInTeamInMatches.Any(p => p.PlayerId.Equals(player.Id))).Result
-                }).OrderByDescending(o=>o.MatchFinishedAt).ToList(),
+                    Teams = x.TeamInMatches.Select(tim => new TeamInMatchResponse
+                        {Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
+                    Result = x.TeamInMatches
+                        .First(tim => tim.PlayerInTeamInMatches.Any(p => p.PlayerId.Equals(player.Id))).Result
+                }).OrderByDescending(o => o.MatchFinishedAt).ToList(),
                 Kills = player.PlayerInTeamInMatches
+                    .Where(x => !x.Match.IsDeleted)
                     .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Kills})
                     .OrderBy(o => o.Date).ToList(),
                 Assists = player.PlayerInTeamInMatches
+                    .Where(x => !x.Match.IsDeleted)
                     .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Assists})
                     .OrderBy(o => o.Date).ToList(),
                 Deaths = player.PlayerInTeamInMatches
+                    .Where(x => !x.Match.IsDeleted)
                     .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Deaths})
                     .OrderBy(o => o.Date).ToList(),
                 Mvps = player.PlayerInTeamInMatches
+                    .Where(x => !x.Match.IsDeleted)
                     .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Mvp})
                     .OrderBy(o => o.Date).ToList(),
                 Scores = player.PlayerInTeamInMatches
+                    .Where(x => !x.Match.IsDeleted)
                     .Select(x => new StatisticResponse {Date = x.Match.MatchFinishedAt, Value = x.Score})
                     .OrderBy(o => o.Date).ToList(),
-                KdRatios = player.PlayerInTeamInMatches.Select(x => new StatisticResponse
+                KdRatios = player.PlayerInTeamInMatches
+                    .Where(x => !x.Match.IsDeleted)
+                    .Select(x => new StatisticResponse
                         {Date = x.Match.MatchFinishedAt, Value = Math.Round((double) x.Kills / x.Deaths, 2)})
                     .OrderBy(o => o.Date).ToList(),
-                Streak = player.PlayerInTeamInMatches.GetPlayerStreak(),
-                LongestWinStreak = player.PlayerInTeamInMatches.GetLongestWinStreak()
+                Streak = player.PlayerInTeamInMatches.Where(x => !x.Match.IsDeleted).ToList().GetPlayerStreak(),
+                LongestWinStreak = player.PlayerInTeamInMatches.Where(x => !x.Match.IsDeleted).ToList()
+                    .GetLongestWinStreak()
             };
         }
 
@@ -90,7 +101,7 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
                 .Select(x => new PlayerInTeamResponse { Id = x.Id, Name = x.SteamName, Avatar = x.SteamAvatarUri })
                 .ToList();
         }
-
+        
         private static List<StreakResponse> GetPlayerStreak(this ICollection<PlayerInTeamInMatch> playerInTeamInMatches)
         {
             return playerInTeamInMatches
