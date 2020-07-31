@@ -26,31 +26,34 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Queries
             _statisticsDbContext = statisticsDbContext;
         }
 
-        public async Task<PlayerDetailsResponse> Handle(GetPlayerDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<PlayerDetailsResponse> Handle(GetPlayerDetailsQuery request,
+            CancellationToken cancellationToken)
         {
             var player = await _statisticsDbContext.Players
                 .Include(p => p.PlayerInTeamInMatches)
                 .ThenInclude(ptm => ptm.Match)
                 .ThenInclude(m => m.TeamInMatches)
-                .ThenInclude(o=>o.PlayerInTeamInMatches)
-                .Include(p => p.PlayerInTeamInMatches)
-                .ThenInclude(t => t.Team)
-                .ThenInclude(z => z.NameFromPlayer)
                 .FirstOrDefaultAsync(x => x.Id.Equals(request.Id) && !x.IsDeleted, cancellationToken);
+
 
             var playerTeams = await _statisticsDbContext.Teams
                 .Include(t => t.NameFromPlayer)
                 .Include(t => t.TeamInMatches)
                 .ThenInclude(tim => tim.PlayerInTeamInMatches)
                 .ThenInclude(ptm => ptm.Player)
-                .Where(x => x.TeamInMatches.Any(z => z.PlayerInTeamInMatches.Any(p => p.PlayerId.Equals(request.Id))))
+                .Include(t => t.TeamInMatches)
+                .ThenInclude(tim => tim.PlayerInTeamInMatches)
+                .ThenInclude(p => p.Match)
+                .Where(x => x.TeamInMatches.Any(z => z.PlayerInTeamInMatches.Any(p => p.PlayerId.Equals(request.Id))) &&
+                            !x.IsDeleted)
                 .ToListAsync(cancellationToken);
 
             var playerMatches = await _statisticsDbContext.Matches
                 .Include(m => m.TeamInMatches)
-                .ThenInclude(tim=>tim.Team)
-                .ThenInclude(p=>p.NameFromPlayer)
-                .Where(x => x.TeamInMatches.Any(z => z.PlayerInTeamInMatches.Any(c => c.PlayerId.Equals(request.Id))))
+                .ThenInclude(tim => tim.Team)
+                .ThenInclude(p => p.NameFromPlayer)
+                .Where(x => x.TeamInMatches.Any(z => z.PlayerInTeamInMatches.Any(c => c.PlayerId.Equals(request.Id))) &&
+                            !x.IsDeleted)
                 .ToListAsync(cancellationToken);
 
             return player.ToPlayerDetailsResponse(playerTeams, playerMatches);

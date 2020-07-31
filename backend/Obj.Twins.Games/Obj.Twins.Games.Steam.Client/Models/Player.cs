@@ -1,4 +1,5 @@
-﻿using Obj.Twins.Games.Steam.Client.Enums;
+﻿using System.Text.Json.Serialization;
+using Obj.Twins.Games.Steam.Client.Enums;
 
 namespace Obj.Twins.Games.Steam.Client.Models
 {
@@ -17,6 +18,8 @@ namespace Obj.Twins.Games.Steam.Client.Models
         public string PrimaryClanId { get; set; }
         public int TimeCreated { get; set; }
         public int PersonaStateFlags { get; set; }
+
+        [JsonPropertyName("loccountrycode")]
         public string LocCountryCode { get; set; }
     }
 }

@@ -25,7 +25,8 @@ namespace Obj.Twins.Games.Steam.Client.Contracts
                 SteamName = x.PersonaName,
                 PersonState = x.PersonaState,
                 Avatar = x.AvatarFull,
-                ProfileUrl = x.ProfileUrl
+                ProfileUrl = x.ProfileUrl,
+                LocCountryCode = x.LocCountryCode
             }).FirstOrDefault();
         }
 
