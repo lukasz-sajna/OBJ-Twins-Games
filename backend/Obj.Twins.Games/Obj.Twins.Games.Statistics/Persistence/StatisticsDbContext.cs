@@ -81,9 +81,15 @@ namespace Obj.Twins.Games.Statistics.Persistence
 
         public Task<Match> GetMatchDetails(Guid id, CancellationToken cancellationToken = default)
         {
-            return Matches.Include(x => x.TeamInMatches).ThenInclude(x => x.PlayerInTeamInMatches)
-                .Include(x => x.TeamInMatches).ThenInclude(x => x.Team)
-                .Where(x => !x.IsDeleted).FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
+            return Matches
+                .Include(x => x.TeamInMatches)
+                .ThenInclude(x => x.PlayerInTeamInMatches)
+                .ThenInclude(x => x.Player)
+                .Include(x => x.TeamInMatches)
+                .ThenInclude(x => x.Team)
+                .ThenInclude(x => x.NameFromPlayer)
+                .Where(x => !x.IsDeleted)
+                .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
         }
 
         public IQueryable<Team> GetTeams()

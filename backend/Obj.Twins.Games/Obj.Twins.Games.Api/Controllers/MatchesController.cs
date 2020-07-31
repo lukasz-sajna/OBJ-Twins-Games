@@ -22,7 +22,7 @@ namespace Obj.Twins.Games.Api.Controllers
             return Ok(await _mediator.Send(new GetMatchesQuery()));
         }
 
-        [HttpGet("MatchDetails")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetMatchDetails(Guid id)
         {
             return Ok(await _mediator.Send(new GetMatchDetailsQuery {Id = id}));
