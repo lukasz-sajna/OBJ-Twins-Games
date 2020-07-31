@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, AfterViewInit, OnChanges, ViewChild, OnDestroy } from '@angular/core';
 import { PlayerDetails } from 'src/app/models/player-details';
 import { MatchResult } from 'src/app/models/match-result.enum';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { GoogleChartComponent } from 'angular-google-charts';
 
 @Component({
   selector: 'app-player-stats',
@@ -9,7 +10,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   styleUrls: ['./player-stats.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlayerStatsComponent implements OnInit, OnChanges {
+export class PlayerStatsComponent implements OnChanges {
   @Input()
   public playerInfo: PlayerDetails;
 
@@ -30,7 +31,6 @@ export class PlayerStatsComponent implements OnInit, OnChanges {
   public chartOptions = {
     chartArea: { left: 25, top: 10, width: '100%', height: '75%' },
     is3D: false,
-    curveType: 'function',
     width: '100%',
     legend: {
       position: 'bottom'
@@ -54,11 +54,6 @@ export class PlayerStatsComponent implements OnInit, OnChanges {
       }
     }
   };
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   public ngOnChanges(): void {
     this.prepareFullChartData();
@@ -88,6 +83,8 @@ export class PlayerStatsComponent implements OnInit, OnChanges {
   }
 
   private prepareFullChartData(): void {
+    this.fullChartData = [];
+
     for (let index = 0; index < this.playerInfo.kills.length; index++) {
       this.fullChartData.push(
         [
@@ -104,7 +101,8 @@ export class PlayerStatsComponent implements OnInit, OnChanges {
 
   private setChartData(): any {
     const columnindexesToRemove = this.getColumnIndexesToRemove();
-    const data = JSON.parse(JSON.stringify(this.fullChartData));
+    let data: any[] = [];
+    data = JSON.parse(JSON.stringify(this.fullChartData));
 
     for (let index = columnindexesToRemove.length - 1; index >= 0; index--) {
       data.forEach((element: []) => {
@@ -164,7 +162,6 @@ export class PlayerStatsComponent implements OnInit, OnChanges {
     filterCounter += this.chartColumnsSelection.assists ? 1 : 0;
     filterCounter += this.chartColumnsSelection.deaths ? 1 : 0;
     filterCounter += this.chartColumnsSelection.mvps ? 1 : 0;
-
     return filterCounter <= 1;
   }
 

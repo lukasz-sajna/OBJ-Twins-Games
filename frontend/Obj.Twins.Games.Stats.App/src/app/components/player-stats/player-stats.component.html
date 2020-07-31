@@ -38,11 +38,13 @@
 </div>
 <div class="row">
     <ng-container *ngIf="isLoading; else chart">
-        Loading..
+       <div class="col">
+        <mat-spinner class="mx-auto mt-50"></mat-spinner>
+       </div>
     </ng-container>
     <ng-template #chart>
         <div class="col-10">
-            <google-chart style="width: 100%;" [data]="chartData" [dynamicResize]="true" [type]="'LineChart'"
+            <google-chart id="google-chart" style="width: 100%;" [data]="chartData" [dynamicResize]="true" [type]="'AreaChart'"
                 [columns]="dataColumns" [options]="chartOptions"></google-chart>
         </div>
         <div class="col-2 mt-3">
