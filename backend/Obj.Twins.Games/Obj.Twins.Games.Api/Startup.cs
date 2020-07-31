@@ -44,7 +44,9 @@ namespace Obj.Twins.Games.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.ConfigureCors(Configuration.GetSection(nameof(CorsSettings)).Get<CorsSettings>(), Const.DefaultCorsPolicy);
             services.ConfigureSwagger();
             services.ConfigureSignalR();
