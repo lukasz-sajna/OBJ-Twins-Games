@@ -1,4 +1,6 @@
-﻿using Obj.Twins.Games.Statistics.Persistence.Models;
+﻿using System.Linq;
+using Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions;
+using Obj.Twins.Games.Statistics.Persistence.Models;
 
 namespace Obj.Twins.Games.Statistics.Components.Matches.Contracts.Extensions
 {
@@ -11,6 +13,17 @@ namespace Obj.Twins.Games.Statistics.Components.Matches.Contracts.Extensions
                 Name = teamInMatch.Team.Name,
                 Flag = teamInMatch.Team.Flag,
                 Score = teamInMatch.Score
+            };
+        }
+        internal static TeamInMatchDetailsResponse ToTeamInMatchDetailsResponse(this TeamInMatch teamInMatch)
+        {
+            return new TeamInMatchDetailsResponse
+            {
+                Name = teamInMatch.Team.Name,
+                Flag = teamInMatch.Team.Flag,
+                Score = teamInMatch.Score,
+                Players = teamInMatch.PlayerInTeamInMatches.Select(x => x.ToPlayerResponse())
+                    .OrderByDescending(o => o.Score).ToList()
             };
         }
     }

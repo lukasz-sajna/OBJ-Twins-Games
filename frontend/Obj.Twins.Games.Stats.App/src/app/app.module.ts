@@ -15,14 +15,10 @@ import { HeaderComponent } from './containers/header/header.component';
 import { PlayersStatsComponent } from './pages/players-stats/players-stats.component';
 import { API_URL } from './injection-tokens';
 import { HeaderEffects } from './store/effects/header.effects';
-import { playerStatsReducer, statsFeatureKey } from './store/reducers/stats.reducer';
-import { StatsEffects } from './store/effects/stats.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { MatchComponent } from './pages/match/match.component';
 import { MatchCardComponent } from './components/match-card/match-card.component';
 import { MatchDetailsComponent } from './pages/match-details/match-details.component';
-import { MatchDetailsCardComponent } from './components/match-details-card/match-details-card.component';
-import { MatchDetailsTableComponent } from './components/match-details-table/match-details-table.component';
 import { TeamStatsComponent } from './pages/team-stats/team-stats.component';
 import { TeamStatsTableComponent } from './components/team-stats-table/team-stats-table.component';
 import { TeamsEffects } from './store/effects/teams.effects';
@@ -35,6 +31,9 @@ import { PlayerStatsComponent } from './components/player-stats/player-stats.com
 import { PlayerStatCardComponent } from './components/player-stat-card/player-stat-card.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { FormsModule } from '@angular/forms';
+import { MatchEffects } from './store/effects/match.effects';
+import { matchFeatureKey, matchReducer } from './store/reducers/match.reducer';
+import { MapPipe } from './pipes/map.pipe';
 
 @NgModule({
   declarations: [
@@ -45,14 +44,13 @@ import { FormsModule } from '@angular/forms';
     MatchComponent,
     MatchCardComponent,
     MatchDetailsComponent,
-    MatchDetailsCardComponent,
-    MatchDetailsTableComponent,
     TeamStatsComponent,
     TeamStatsTableComponent,
     PlayerDetailsComponent,
     PlayerInfoComponent,
     PlayerStatsComponent,
-    PlayerStatCardComponent
+    PlayerStatCardComponent,
+    MapPipe,
   ],
   imports: [
     BrowserModule,
@@ -65,12 +63,12 @@ import { FormsModule } from '@angular/forms';
         strictActionImmutability: true
       }
     }),
-    StoreModule.forFeature(statsFeatureKey, playerStatsReducer),
+    StoreModule.forFeature(matchFeatureKey, matchReducer),
     StoreModule.forFeature(teamsFeatureKey, teamsReducer),
     StoreModule.forFeature(playersFeatureKey, playersReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot({ routerState: RouterState.Minimal }),
-    EffectsModule.forRoot([StatsEffects, HeaderEffects, TeamsEffects, PlayersEffects]),
+    EffectsModule.forRoot([MatchEffects, HeaderEffects, TeamsEffects, PlayersEffects]),
     MaterialModule,
     HttpClientModule,
     GoogleChartsModule.forRoot({ version: '49' }),

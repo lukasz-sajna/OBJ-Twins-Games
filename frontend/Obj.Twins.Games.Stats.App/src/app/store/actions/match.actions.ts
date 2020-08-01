@@ -7,7 +7,7 @@ import {
     MATCH_DETAILS_REQUESTED,
     MATCH_DETAILS_REQUESTED_FAILURE,
     MATCH_DETAILS_REQUESTED_SUCCESS,
-} from './stats.action-names';
+} from './match.action-names';
 import { Match } from 'src/app/models/match';
 import { MatchDetails } from 'src/app/models/match-details';
 

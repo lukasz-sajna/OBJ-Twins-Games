@@ -1,14 +1,10 @@
-import { MatchDetailsPlayerInfo } from './match-details-player-info';
+import { TeamInMatch } from './team-in-match';
+import { TeamInMatchDetails } from './team-in-match-details';
 
 export interface MatchDetails {
-    firstTeamName: string;
-    firstTeamFlag: string;
-    firstTeamScore: number;
-    secondTeamName: string;
-    secondTeamFlag: string;
-    secondTeamScore: number;
+    id: string;
+    teams: TeamInMatchDetails[];
     map: string;
-    demoUrl: string;
-    firstTeamStats: MatchDetailsPlayerInfo[];
-    secondTeamStats: MatchDetailsPlayerInfo[];
+    demuUrl: string;
+    matchFinishedAt: Date;
 }

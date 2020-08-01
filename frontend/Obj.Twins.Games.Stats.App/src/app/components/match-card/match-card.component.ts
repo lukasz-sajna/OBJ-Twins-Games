@@ -29,14 +29,14 @@ export class MatchCardComponent {
   }
 
   public flagUrl(flagCode: string): string {
-    return `https://www.countryflags.io/${flagCode}/flat/64.png`;
+    return flagCode ? `https://www.countryflags.io/${flagCode}/flat/64.png` : String();
   }
 
   public get FirstTeam(): TeamInMatch {
-    return this.match.teams[0];
+    return this.match.teams ? this.match.teams[0] : [] as unknown as TeamInMatch;
   }
 
   public get SecondTeam(): TeamInMatch {
-    return this.match.teams[1];
+    return this.match.teams ? this.match.teams[1] : [] as unknown as TeamInMatch;
   }
 }

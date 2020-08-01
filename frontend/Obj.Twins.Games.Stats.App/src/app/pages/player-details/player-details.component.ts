@@ -11,6 +11,7 @@ import { GlobalState } from 'src/app/store/state/global-state';
 import { PlayerDetails } from 'src/app/models/player-details';
 import { PlayerSteamStatus } from 'src/app/models/player-steam-status';
 import { Team } from 'src/app/models/team';
+import { openMatchDetails } from 'src/app/store/actions/match.actions';
 
 @UntilDestroy()
 @Component({
@@ -46,10 +47,10 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.select(selectRouteParamsSelector).pipe(
       untilDestroyed(this),
-      filter(params => params.id),
+      filter(params => params.playerId),
       tap(params => {
-        this.store.dispatch(playerDetailsRequested({ id: params.id }));
-        this.store.dispatch(playerStatusRequested({id: params.id}));
+        this.store.dispatch(playerDetailsRequested({ id: params.playerId }));
+        this.store.dispatch(playerStatusRequested({ id: params.playerId }));
       })
     ).subscribe();
   }
@@ -63,7 +64,11 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
   }
 
   public onPlayerClicked(id: string): void {
-    this.store.dispatch(openPlayerDetails({id}));
+    this.store.dispatch(openPlayerDetails({ id }));
+  }
+
+  public matchClicked(matchId: string): void {
+    this.store.dispatch(openMatchDetails({ matchId }));
   }
 
 }

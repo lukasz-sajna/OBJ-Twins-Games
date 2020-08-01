@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { StatsState } from 'src/app/store/state/stats-state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Match } from 'src/app/models/match';
-import { matchListSelector, isLoadingSelector } from 'src/app/store/selectors/stats-state.selector';
-import { matchListRequested, openMatchDetails } from 'src/app/store/actions/stats.actions';
+import { matchListRequested, openMatchDetails } from 'src/app/store/actions/match.actions';
+import { MatchState } from 'src/app/store/state/match-state';
+import { tap } from 'rxjs/operators';
+import { matchListSelector, isLoadingSelector } from 'src/app/store/selectors/match-state.selector';
 
 @Component({
   selector: 'app-match',
@@ -16,7 +17,7 @@ export class MatchComponent implements OnInit {
 
   public isLoading$: Observable<boolean>;
 
-  constructor(private store: Store<StatsState>) {
+  constructor(private store: Store<MatchState>) {
     this.matchList$ = this.store.select(matchListSelector);
     this.isLoading$ = this.store.select(isLoadingSelector);
   }
@@ -27,14 +28,6 @@ export class MatchComponent implements OnInit {
 
   public matchClicked(matchId: string): void {
     this.store.dispatch(openMatchDetails({ matchId }));
-  }
-
-  public get ContainerHeight(): string {
-    const header = document.getElementById('header');
-    if (header) {
-      return `calc(100vh - ${header.getBoundingClientRect().height + 30}px)`;
-    }
-    return '0';
   }
 
 }

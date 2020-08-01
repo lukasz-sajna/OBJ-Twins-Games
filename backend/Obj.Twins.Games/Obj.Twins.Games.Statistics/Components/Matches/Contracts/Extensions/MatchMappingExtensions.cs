@@ -25,7 +25,7 @@ namespace Obj.Twins.Games.Statistics.Components.Matches.Contracts.Extensions
                 Map = match.Map,
                 MatchFinishedAt = match.MatchFinishedAt,
                 DemoUrl = match.DemoUrl,
-                Teams = new List<TeamInMatchDetailsResponse>()
+                Teams = match.TeamInMatches.Select(x => x.ToTeamInMatchDetailsResponse()).ToList()
             };
         }
     }
