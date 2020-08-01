@@ -18,8 +18,8 @@ export class MapBackgroundService {
         return '../../assets/maps/ar_lunacy.jpg';
       case 'ar_monastery':
         return '../../assets/maps/ar_monastery.jpg';
-      case 'ar_shoot':
-        return '../../assets/maps/ar_shoot.jpg';
+      case 'ar_shoots':
+        return '../../assets/maps/ar_shoots.jpg';
       case 'awp_india':
       case 'workshop/391889933/awp_india_csgo':
         return '../../assets/maps/awp_india.jpg';

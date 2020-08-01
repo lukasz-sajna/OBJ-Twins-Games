@@ -10,7 +10,8 @@
     <mat-divider class="p-2"></mat-divider>
     <h2 class="mb-0">Player history of matches</h2>
     <div class="pb-2">
-        <app-match-card [resultGlow]="true" [match]="match" *ngFor="let match of PlayerDetails.matches">
+        <app-match-card [resultGlow]="true" [match]="match" *ngFor="let match of PlayerDetails.matches" 
+        (clicked)="matchClicked($event)">
         </app-match-card>
     </div>
 </div>

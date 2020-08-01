@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { StatsDataService } from 'src/app/services/stats-data.service';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -11,17 +10,16 @@ import {
     matchDetailsRequested,
     matchDetailsRequestedSuccess,
     matchDetailsRequestedFailure,
-} from '../actions/stats.actions';
+} from '../actions/match.actions';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
 import { MATCHES_ROUTE } from 'src/app/routes';
 import { MatchesService } from 'src/app/services/matches.service';
 
 @Injectable()
-export class StatsEffects {
+export class MatchEffects {
     constructor(
         private actions$: Actions,
-        private statsDataService: StatsDataService,
         private matchesService: MatchesService,
         private toastService: ToastService,
         private router: Router,
@@ -56,7 +54,7 @@ export class StatsEffects {
         this.actions$.pipe(
             ofType(matchDetailsRequested),
             switchMap(action =>
-                this.statsDataService.getMatchDetails(action.matchId).pipe(
+                this.matchesService.getMatch(action.matchId).pipe(
                     map(data => matchDetailsRequestedSuccess({ response: data })),
                     catchError(error => of(matchDetailsRequestedFailure({ error }))))
             ),

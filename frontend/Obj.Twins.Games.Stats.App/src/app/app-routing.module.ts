@@ -16,13 +16,13 @@ const routes: Routes = [
     path: PLAYERS_ROUTE, component: PlayersStatsComponent
   },
   {
-    path: `${PLAYERS_ROUTE}/:id`, component: PlayerDetailsComponent
+    path: `${PLAYERS_ROUTE}/:playerId`, component: PlayerDetailsComponent
   },
   {
     path: TEAMS_RTOUTE, component: TeamStatsComponent
   },
   {
-    path: `${MATCHES_ROUTE}/:id`, component: MatchDetailsComponent
+    path: `${MATCHES_ROUTE}/:matchId`, component: MatchDetailsComponent
   },
   {
     path: EMPTY_ROUTE,
