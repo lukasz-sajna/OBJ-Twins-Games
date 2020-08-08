@@ -47,8 +47,4 @@ export class MatchDetailsComponent implements OnInit, OnDestroy {
     this.store.dispatch(openPlayerDetails({ id: playerId }));
   }
 
-  public matchClicked(matchId: string): void {
-    this.store.dispatch(openMatchDetails({ matchId }));
-  }
-
 }
