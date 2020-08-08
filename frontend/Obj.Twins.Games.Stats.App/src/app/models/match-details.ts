@@ -5,6 +5,6 @@ export interface MatchDetails {
     id: string;
     teams: TeamInMatchDetails[];
     map: string;
-    demuUrl: string;
+    demoUrl: string;
     matchFinishedAt: Date;
 }
