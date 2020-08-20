@@ -94,8 +94,13 @@ namespace Obj.Twins.Games.Statistics.Persistence
 
         public IQueryable<Team> GetTeams()
         {
-            return Teams.Include(t => t.NameFromPlayer).Include(t => t.TeamInMatches).ThenInclude(tim => tim.Match)
-                .Where(m => !m.IsDeleted).Include(t => t.TeamInMatches).ThenInclude(p => p.PlayerInTeamInMatches)
+            return Teams
+                .Include(t => t.NameFromPlayer)
+                .Include(t => t.TeamInMatches)
+                .ThenInclude(tim => tim.Match)
+                .Where(m => !m.IsDeleted)
+                .Include(t => t.TeamInMatches)
+                .ThenInclude(p => p.PlayerInTeamInMatches)
                 .ThenInclude(pim => pim.Player);
         }
 

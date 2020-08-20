@@ -22,10 +22,12 @@ namespace Obj.Twins.Games.Api.Controllers
             return Ok(await _mediator.Send(new GetTeamsQuery()));
         }
 
-        [HttpGet("TeamDetails")]
-        public IActionResult GetTeamDetails(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTeamDetailsAsync(Guid id)
         {
-            return Ok();
+            var result = await _mediator.Send(new GetTeamDetailsQuery {Id = id});
+
+            return Ok(result);
         }
     }
 }
