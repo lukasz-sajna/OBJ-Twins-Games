@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Obj.Twins.Games.Statistics.Components.Common;
+using Obj.Twins.Games.Statistics.Components.Players.Contracts;
 
 namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts
 {
@@ -22,5 +23,7 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts
         public List<StreakResponse> Streak { get; set; }
 
         public List<TeamMatchResponse> Matches { get; set; }
+
+        public List<PlayerResponse> Players { get; set; }
     }
 }

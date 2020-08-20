@@ -5,6 +5,7 @@ using Obj.Twins.Games.Statistics.Components.Common;
 using Obj.Twins.Games.Statistics.Components.Matches.Contracts;
 using Obj.Twins.Games.Statistics.Components.Matches.Enums;
 using Obj.Twins.Games.Statistics.Components.Players.Contracts;
+using Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions;
 using Obj.Twins.Games.Statistics.Persistence.Models;
 
 namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions
@@ -46,10 +47,14 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions
                     MatchFinishedAt = x.MatchFinishedAt,
                     Map = x.Map,
                     Teams = x.TeamInMatches.Select(tim => new TeamInMatchResponse
-                        { Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score }).ToList(),
+                        {Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
                     Result = x.TeamInMatches
                         .First(tim => tim.PlayerInTeamInMatches != null).Result
                 }).OrderByDescending(o => o.MatchFinishedAt).ToList(),
+                Players = team.TeamInMatches.SelectMany(x => x.PlayerInTeamInMatches)
+                    .Select(x => x.ToPlayerResponse())
+                    .ToList()
+                    .ToOverallPlayerStats()
             };
         }
 
