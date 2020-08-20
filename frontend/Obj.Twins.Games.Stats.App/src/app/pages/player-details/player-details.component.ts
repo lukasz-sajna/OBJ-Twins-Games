@@ -2,13 +2,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, interval } from 'rxjs';
 import { PlayersState } from 'src/app/store/state/players-state';
 import { Store } from '@ngrx/store';
-import { playerDetailSelector, playerIdSelector, isLoadingSelector, playerSteamStatusSelector, playerTeamsSelector } from 'src/app/store/selectors/players-state.selector';
+import {
+  playerDetailSelector,
+  isLoadingSelector,
+  playerSteamStatusSelector,
+  playerTeamsSelector
+} from 'src/app/store/selectors/players-state.selector';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { playerStatusRequested, playerDetailsRequested, openPlayerDetails } from 'src/app/store/actions/player.actions';
 import { selectRouteParamsSelector } from 'src/app/store/selectors/global-state.selectors';
 import { GlobalState } from 'src/app/store/state/global-state';
-import { PlayerDetails } from 'src/app/models/player-details';
 import { PlayerSteamStatus } from 'src/app/models/player-steam-status';
 import { Team } from 'src/app/models/team';
 import { openMatchDetails } from 'src/app/store/actions/match.actions';

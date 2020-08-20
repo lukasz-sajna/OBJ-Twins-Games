@@ -1,11 +1,10 @@
-<div
-  class="container mat-elevation-z6"
->
-<app-team-stats-table
+<div class="container mat-elevation-z6">
+  <app-team-stats-table
     class="container"
     [isLoading]="isLoading$ | async"
     [teams]="allTeams$"
-    (showTeamDetails)="rowClicked($event)"    
-    (playerClicked)="playerClicked($event)">
-</app-team-stats-table>
+    (showTeamDetails)="rowClicked($event)"
+    (playerClicked)="playerClicked($event)"
+  >
+  </app-team-stats-table>
 </div>

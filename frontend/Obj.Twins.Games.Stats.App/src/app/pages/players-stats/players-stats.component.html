@@ -1,12 +1,22 @@
 <div class="container mat-elevation-z6">
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Overall">
-      <app-player-stats-table class="container" [isLoading]="isLoading$ | async" [playersData]="playersData$"
-        [showMatchesPlayed]="true" (rowClicked)="rowClicked($event)"></app-player-stats-table>
+      <app-player-stats-table
+        class="container"
+        [isLoading]="isLoading$ | async"
+        [playersData]="playersData$"
+        [showMatchesPlayed]="true"
+        (rowClicked)="rowClicked($event)"
+      ></app-player-stats-table>
     </mat-tab>
     <mat-tab label="Average per match">
-      <app-player-stats-table class="container" [isLoading]="isLoading$ | async" [playersData]="playersDataPerMatch$"
-        [showMatchesPlayed]="true" (rowClicked)="rowClicked($event)"></app-player-stats-table>
+      <app-player-stats-table
+        class="container"
+        [isLoading]="isLoading$ | async"
+        [playersData]="playersDataPerMatch$"
+        [showMatchesPlayed]="true"
+        (rowClicked)="rowClicked($event)"
+      ></app-player-stats-table>
     </mat-tab>
   </mat-tab-group>
 </div>

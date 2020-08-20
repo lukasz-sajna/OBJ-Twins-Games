@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { openMatches, openPlayersStats, openTeamsStats } from '../actions/header.actions';
 import { Observable } from 'rxjs';
-import { MATCHES_ROUTE, PLAYERS_ROUTE, TEAMS_RTOUTE } from 'src/app/routes';
+import { MATCHES_ROUTE, PLAYERS_ROUTE, TEAMS_ROUTE } from 'src/app/routes';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class HeaderEffects {
     public openTeamsStats$: Observable<any> = createEffect(() =>
         this.actions$.pipe(
             ofType(openTeamsStats),
-            tap(() => this.router.navigate([TEAMS_RTOUTE]))
+            tap(() => this.router.navigate([TEAMS_ROUTE]))
         ), { dispatch: false }
     );
 }
