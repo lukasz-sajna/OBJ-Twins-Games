@@ -47,14 +47,17 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions
                     MatchFinishedAt = x.MatchFinishedAt,
                     Map = x.Map,
                     Teams = x.TeamInMatches.Select(tim => new TeamInMatchResponse
-                        {Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
+                        {Id = tim.TeamId, Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
                     Result = x.TeamInMatches
                         .First(tim => tim.PlayerInTeamInMatches != null).Result
                 }).OrderByDescending(o => o.MatchFinishedAt).ToList(),
                 Players = team.TeamInMatches.SelectMany(x => x.PlayerInTeamInMatches)
                     .Select(x => x.ToPlayerResponse())
                     .ToList()
-                    .ToOverallPlayerStats()
+                    .ToOverallPlayerStats(),
+                LongestWinStreak = matches.SelectMany(x => x.TeamInMatches)
+                    .Where(x => x.TeamId.Equals(team.Id))
+                    .Count(x => x.Result == MatchResult.Win)
             };
         }
 

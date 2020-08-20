@@ -10,6 +10,7 @@ namespace Obj.Twins.Games.Statistics.Components.Matches.Contracts.Extensions
         {
             return new TeamInMatchResponse
             {
+                Id = teamInMatch.TeamId,
                 Name = teamInMatch.Team.Name,
                 Flag = teamInMatch.Team.Flag,
                 Score = teamInMatch.Score
@@ -19,6 +20,7 @@ namespace Obj.Twins.Games.Statistics.Components.Matches.Contracts.Extensions
         {
             return new TeamInMatchDetailsResponse
             {
+                Id = teamInMatch.TeamId,
                 Name = teamInMatch.Team.Name,
                 Flag = teamInMatch.Team.Flag,
                 Score = teamInMatch.Score,

@@ -20,6 +20,8 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts
 
         public int MatchesPlayed { get; set; }
 
+        public int LongestWinStreak { get; set; }
+
         public List<StreakResponse> Streak { get; set; }
 
         public List<TeamMatchResponse> Matches { get; set; }
