@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TeamsState } from 'src/app/store/state/teams-state';
-import { teamsStatsRequested } from 'src/app/store/actions/teams.actions';
+import { teamsStatsRequested, openTeamDetails } from 'src/app/store/actions/teams.actions';
 import { Team } from 'src/app/models/team';
 import { Observable } from 'rxjs';
 import { allTeamsSelector, isLoadingSelector } from 'src/app/store/selectors/teams-state.selector';
@@ -26,7 +26,7 @@ export class TeamStatsComponent implements OnInit {
   }
 
   public rowClicked(teamId: string): void {
-    console.log(`Open team details: ${teamId}`);
+    this.store.dispatch(openTeamDetails({id: teamId}));
   }
 
   public playerClicked(playerId: string): void {

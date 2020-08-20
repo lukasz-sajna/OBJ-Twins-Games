@@ -18,4 +18,20 @@ export const allTeamsSelector = createSelector(
     }
 );
 
+export const teamDetailSelector = createSelector(
+    teamsFeatureState,
+    (teams) => {
+        return teams.teamDetails;
+    }
+);
+
+export const teamPlayersDetailsSelector = createSelector(
+    teamsFeatureState,
+    (teams) => {
+        if (teams.teamDetails.players.length > 0) {
+            return teams.teamDetails.players;
+        }
+    }
+);
+
 

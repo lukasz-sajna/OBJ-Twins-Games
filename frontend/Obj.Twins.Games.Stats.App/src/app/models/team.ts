@@ -2,7 +2,7 @@ import { TeamInMatch } from './team-in-match';
 import { Streak } from './streak';
 import { PlayerInTeam } from './player-in-team';
 
-export interface Team extends TeamInMatch{
+export interface Team extends TeamInMatch {
     id: string;
     wins: number;
     draws: number;

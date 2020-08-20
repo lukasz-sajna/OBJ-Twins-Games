@@ -12,7 +12,7 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
 {
     public static class PlayerMappingExtension
     {
-        internal static PlayerResponse ToPlayerResponse(this PlayerInTeamInMatch playerInTeamInMatch)
+        public static PlayerResponse ToPlayerResponse(this PlayerInTeamInMatch playerInTeamInMatch)
         {
             return new PlayerResponse
             {
@@ -27,7 +27,7 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
             };
         }
 
-        internal static List<PlayerResponse> ToOverallPlayerStats(this List<PlayerResponse> playerResponses)
+        public static List<PlayerResponse> ToOverallPlayerStats(this List<PlayerResponse> playerResponses)
         {
             return playerResponses.GroupBy(x => x.Id).Select(z => new PlayerResponse
             {
@@ -58,7 +58,7 @@ namespace Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions
                     MatchFinishedAt = x.MatchFinishedAt,
                     Map = x.Map,
                     Teams = x.TeamInMatches.Select(tim => new TeamInMatchResponse
-                        {Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
+                        {Id = tim.TeamId, Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
                     Result = x.TeamInMatches
                         .First(tim => tim.PlayerInTeamInMatches != null).Result
                 }).OrderByDescending(o => o.MatchFinishedAt).ToList(),

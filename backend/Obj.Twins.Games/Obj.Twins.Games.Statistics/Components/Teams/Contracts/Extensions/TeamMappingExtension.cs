@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Obj.Twins.Games.Statistics.Components.Common;
+using Obj.Twins.Games.Statistics.Components.Matches.Contracts;
 using Obj.Twins.Games.Statistics.Components.Matches.Enums;
 using Obj.Twins.Games.Statistics.Components.Players.Contracts;
+using Obj.Twins.Games.Statistics.Components.Players.Contracts.Extensions;
 using Obj.Twins.Games.Statistics.Persistence.Models;
 
 namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions
@@ -24,6 +26,38 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions
                 MatchesPlayed = team.TeamInMatches.Count,
                 Streak = team.GetTeamStreak(),
                 Players = team.GetPlayersInTeam()
+            };
+        }
+
+        internal static TeamDetailsResponse ToTeamDetailsResponse(this Team team, List<Match> matches)
+        {
+            return new TeamDetailsResponse
+            {
+                Name = team.Name,
+                Flag = team.Flag,
+                Wins = team.GetResultCounter(MatchResult.Win),
+                Draws = team.GetResultCounter(MatchResult.Draw),
+                Loses = team.GetResultCounter(MatchResult.Lost),
+                WinRatio = team.GetTeamWinRatio(),
+                MatchesPlayed = team.TeamInMatches.Count,
+                Streak = team.GetTeamStreak(),
+                Matches = matches.Select(x => new TeamMatchResponse
+                {
+                    Id = x.Id,
+                    MatchFinishedAt = x.MatchFinishedAt,
+                    Map = x.Map,
+                    Teams = x.TeamInMatches.Select(tim => new TeamInMatchResponse
+                        {Id = tim.TeamId, Name = tim.Team.Name, Flag = tim.Team.Flag, Score = tim.Score}).ToList(),
+                    Result = x.TeamInMatches
+                        .First(tim => tim.PlayerInTeamInMatches != null).Result
+                }).OrderByDescending(o => o.MatchFinishedAt).ToList(),
+                Players = team.TeamInMatches.SelectMany(x => x.PlayerInTeamInMatches)
+                    .Select(x => x.ToPlayerResponse())
+                    .ToList()
+                    .ToOverallPlayerStats(),
+                LongestWinStreak = matches.SelectMany(x => x.TeamInMatches)
+                    .Where(x => x.TeamId.Equals(team.Id))
+                    .Count(x => x.Result == MatchResult.Win)
             };
         }
 

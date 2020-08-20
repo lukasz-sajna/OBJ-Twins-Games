@@ -2,8 +2,8 @@
   class="match-card mt-2 blurry py-0 h-100"
   [ngClass]="{
     'result-glow-won': matchResult.Win === match.result && resultGlow,
-    'result-glow-draw':  matchResult.Draw === match.result && resultGlow,
-    'result-glow-lost':  matchResult.Lost === match.result && resultGlow,
+    'result-glow-draw': matchResult.Draw === match.result && resultGlow,
+    'result-glow-lost': matchResult.Lost === match.result && resultGlow,
     'mat-elevation-z2': resultGlow
   }"
   [ngStyle]="{ 'background-image': 'url(' + BackgroundUrl + ')' }"
@@ -21,7 +21,7 @@
         <div
           class="col-6 d-inline-block text-right font-team font-team__score font-blue card-body pl-0 mt-4"
         >
-          {{ FirstTeam.score}}
+          {{ FirstTeam.score }}
         </div>
         <div
           class="col-6 d-inline-block text-left font-team font-team__score font-yellow card-body pr-0 mt-4"

@@ -34,6 +34,7 @@ import { FormsModule } from '@angular/forms';
 import { MatchEffects } from './store/effects/match.effects';
 import { matchFeatureKey, matchReducer } from './store/reducers/match.reducer';
 import { MapPipe } from './pipes/map.pipe';
+import { TeamDetailsComponent } from './pages/team-details/team-details.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { MapPipe } from './pipes/map.pipe';
     PlayerStatsComponent,
     PlayerStatCardComponent,
     MapPipe,
+    TeamDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,19 @@ export const teamsFeatureKey = 'teams';
 
 const intitialState: TeamsState = {
     allTeams: [],
+    teamDetails: {
+        name: String(),
+        flag: String(),
+        wins: 0,
+        draws: 0,
+        loses: 0,
+        winRatio: 0,
+        matchesPlayed: 0,
+        longestWinStreak: 0,
+        streak: [],
+        matches: [],
+        players: []
+    },
     isLoading: false
 };
 
@@ -14,6 +27,9 @@ const reducer = createReducer(
     on(TeamsActions.teamsStatsRequested, (state) => ({ ...state, allTeams: [], isLoading: true })),
     on(TeamsActions.teamsStatsRequestedSuccess, (state, action) => ({ ...state, allTeams: action.response, isLoading: false })),
     on(TeamsActions.teamsStatsRequestedFailure, (state) => ({ ...state, isLoading: false })),
+    on(TeamsActions.teamDetailsRequested, (state) => ({ ...state, teamDetails: intitialState.teamDetails, isLoading: true })),
+    on(TeamsActions.teamDetailsRequestedSuccess, (state, action) => ({ ...state, teamDetails: action.response, isLoading: false })),
+    on(TeamsActions.teamDetailsRequestedFailure, (state) => ({ ...state, isLoading: false })),
 );
 
 export function teamsReducer(state: TeamsState | undefined, action: Action): TeamsState {

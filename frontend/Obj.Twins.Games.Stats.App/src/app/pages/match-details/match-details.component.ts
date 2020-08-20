@@ -10,6 +10,7 @@ import { selectRouteParamsSelector } from 'src/app/store/selectors/global-state.
 import { matchDetailsSelector, isLoadingSelector } from 'src/app/store/selectors/match-state.selector';
 import { PlayerInfo } from 'src/app/models/player-info';
 import { openPlayerDetails } from 'src/app/store/actions/player.actions';
+import { openTeamDetails } from 'src/app/store/actions/teams.actions';
 
 @UntilDestroy()
 @Component({
@@ -45,6 +46,10 @@ export class MatchDetailsComponent implements OnInit, OnDestroy {
 
   public rowClicked(playerId: string): void {
     this.store.dispatch(openPlayerDetails({ id: playerId }));
+  }
+
+  public teamClicked(teamId: string): void {
+    this.store.dispatch(openTeamDetails({ id: teamId }));
   }
 
 }
