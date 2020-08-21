@@ -113,12 +113,14 @@ namespace Obj.Twins.Games.DataSync.Components.Commands
 
         private async Task<Team> GetOrCreateTeamAsync(IReadOnlyList<Player> players, string teamFlag)
         {
-            var teamInMatches = await _statsDbContext.TeamInMatches.Include(p => p.PlayerInTeamInMatches)
+            var teamInMatches = await _statsDbContext.TeamInMatches
+                .Include(x => x.Team)
+                .Include(p => p.PlayerInTeamInMatches)
                 .ThenInclude(x => x.Player).ToListAsync();
 
-            var teamInMatch = teamInMatches.FirstOrDefault(x =>
-                x.PlayerInTeamInMatches.Select(pit => pit.Player.SteamId).OrderBy(o => o).ToList()
-                    .SequenceEqual(players.Select(p => p.SteamId).ToList().OrderBy(z => z)));
+            var teamInMatch = teamInMatches.Where(x =>
+                new HashSet<string>(x.PlayerInTeamInMatches.Select(pit => pit.Player.SteamId)).SetEquals(
+                    players.Select(p => p.SteamId))).ToList().FirstOrDefault();
 
             return teamInMatch?.Team ?? new Team
                 {Flag = teamFlag, NameFromPlayer = RandomPickPlayerForTeamName(players)};
