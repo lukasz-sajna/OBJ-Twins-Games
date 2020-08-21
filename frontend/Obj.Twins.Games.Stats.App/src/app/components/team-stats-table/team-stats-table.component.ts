@@ -72,7 +72,7 @@ export class TeamStatsTableComponent implements OnInit, OnDestroy {
   }
 
   public decimalToPercent(decimal: number): string {
-    return `${decimal * 100} %`;
+    return `${(decimal * 100).toFixed(2)} %`;
   }
 
   public flagUrl(flagCode: string): string {
