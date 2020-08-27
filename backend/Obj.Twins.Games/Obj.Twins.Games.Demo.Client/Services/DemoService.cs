@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -29,7 +30,7 @@ namespace Obj.Twins.Games.Demo.Client.Services
         public string GetDemoUrlForMatch(string map, DateTime matchFinishDateTime)
         {
             var matchDemo = _matchDemos
-                .Where(x => x.Map.Equals(map) && x.Stop.Date.CompareTo(matchFinishDateTime.Date) == 0)
+                .Where(x => HandleCustomMaps(x.Map).Equals(map) && x.Stop.Date.CompareTo(matchFinishDateTime.Date) == 0)
                 .OrderBy(x => x.Stop)
                 .FirstOrDefault(x => x.Stop.CompareTo(RemoveSecondsFromDateTime(matchFinishDateTime)) >= 0);
 
@@ -57,9 +58,12 @@ namespace Obj.Twins.Games.Demo.Client.Services
 
         private static DateTime RemoveSecondsFromDateTime(DateTime input)
         {
-            return input.Second >= 30
-                ? new DateTime(input.Year, input.Month, input.Day, input.Hour, input.Minute + 1, 0)
-                : new DateTime(input.Year, input.Month, input.Day, input.Hour, input.Minute, 0);
+            return new DateTime(input.Year, input.Month, input.Day, input.Hour, input.Minute, 0);
+        }
+
+        private static string HandleCustomMaps(string map)
+        {
+            return map.Contains("workshop") ? new Regex(Regex.Escape("_")).Replace(map, "/", 2) : map;
         }
     }
 }

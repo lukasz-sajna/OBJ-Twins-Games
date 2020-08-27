@@ -35,7 +35,7 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
     this.store.select(selectRouteParamsSelector).pipe(
       untilDestroyed(this),
       filter(params => params.teamId),
-      tap(params => this.store.dispatch(teamDetailsRequested({ id: params.teamId })))
+      tap(params => this.store.dispatch(teamDetailsRequested({ teamId: params.teamId })))
     ).subscribe();
   }
 

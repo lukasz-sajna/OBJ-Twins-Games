@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TeamsService } from 'src/app/services/teams.service';
-import { teamsStatsRequested, teamsStatsRequestedSuccess, teamsStatsRequestedFailure, openTeamDetails, teamDetailsRequested, teamDetailsRequestedSuccess, teamDetailsRequestedFailure } from '../actions/teams.actions';
+import { teamsStatsRequested, teamsStatsRequestedSuccess, teamsStatsRequestedFailure, openTeamDetails, teamDetailsRequested, teamDetailsRequestedSuccess, teamDetailsRequestedFailure, teamsRefreshRequested, teamDetailsRefreshRequested } from '../actions/teams.actions';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -19,7 +19,7 @@ export class TeamsEffects {
 
     public teamsStatsRequested$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(teamsStatsRequested),
+            ofType(teamsStatsRequested, teamsRefreshRequested),
             switchMap(() =>
                 this.teamsService.getTeams().pipe(
                     map(data => teamsStatsRequestedSuccess({ response: data })),
@@ -43,9 +43,9 @@ export class TeamsEffects {
 
     public teamDetailsRequested$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(teamDetailsRequested),
+            ofType(teamDetailsRequested, teamDetailsRefreshRequested),
             switchMap((action) =>
-                this.teamsService.getTeamDetails(action.id).pipe(
+                this.teamsService.getTeamDetails(action.teamId).pipe(
                     map(data => teamDetailsRequestedSuccess({ response: data })),
                     catchError(error => of(teamDetailsRequestedFailure({ error }))))
             ),

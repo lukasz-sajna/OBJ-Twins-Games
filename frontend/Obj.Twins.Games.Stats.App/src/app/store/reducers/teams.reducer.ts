@@ -17,7 +17,18 @@ const intitialState: TeamsState = {
         longestWinStreak: 0,
         streak: [],
         matches: [],
-        players: []
+        players: [{
+            id: String(),
+            name: String(),
+            avatar: String(),
+            kills: 0,
+            assists: 0,
+            deaths: 0,
+            mvp: 0,
+            score: 0,
+            kdRatio: 0,
+            matchesPlayed: 0,
+        }]
     },
     isLoading: false
 };

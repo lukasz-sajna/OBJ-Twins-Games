@@ -14,7 +14,9 @@ import {
     playerDetailsRequestedSuccess,
     playerStatusRequested,
     playerStatusRequestedSuccess,
-    playerStatusRequestedFailure
+    playerStatusRequestedFailure,
+    playersRefreshRequested,
+    playerDetailsRefreshRequested
 } from '../actions/player.actions';
 import { PLAYERS_ROUTE } from 'src/app/routes';
 import { Router } from '@angular/router';
@@ -30,7 +32,7 @@ export class PlayersEffects {
 
     public playersStatsRequested$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(playersStatsRequested),
+            ofType(playersStatsRequested, playersRefreshRequested),
             switchMap(() =>
                 this.playersService.getPlayersStats().pipe(
                     map(data => playersStatsRequestedSuccess({ response: data })),
@@ -47,9 +49,9 @@ export class PlayersEffects {
 
     public playerDetailsRequested$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(playerDetailsRequested),
+            ofType(playerDetailsRequested, playerDetailsRefreshRequested),
             switchMap((action) =>
-                this.playersService.getPlayerDetails(action.id).pipe(
+                this.playersService.getPlayerDetails(action.playerId).pipe(
                     map(data => playerDetailsRequestedSuccess({ response: data })),
                     catchError(error => of(playerDetailsRequestedFailure({ error }))))
             ),

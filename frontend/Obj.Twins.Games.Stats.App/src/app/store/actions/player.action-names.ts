@@ -11,3 +11,6 @@ export const PLAYER_DETAILS_REQUESTED_FAILURE = '[Player Details Effect] Player_
 export const PLAYER_STATUS_REQUESTED = '[Player Details Component] Player_Status_Requested';
 export const PLAYER_STATUS_REQUESTED_SUCCESS = '[Player Details Effect] Player_Status_Requested_Success';
 export const PLAYER_STATUS_REQUESTED_FAILURE = '[Player Details Effect] Player_Status_Requested_Failure';
+
+export const PLAYERS_REFRESH_REQUESTED = '[Players Stats Components] Players_Refresh_Requested';
+export const PLAYER_DETAILS_REFRESH_REQUESTED = '[Players Stats Components] Player_Details_Refresh_Requested';

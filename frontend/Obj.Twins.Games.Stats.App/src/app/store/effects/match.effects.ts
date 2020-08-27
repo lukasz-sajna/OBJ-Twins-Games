@@ -10,6 +10,8 @@ import {
     matchDetailsRequested,
     matchDetailsRequestedSuccess,
     matchDetailsRequestedFailure,
+    matchesRefreshRequested,
+    matchDetailsRefreshRequested,
 } from '../actions/match.actions';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
@@ -27,7 +29,7 @@ export class MatchEffects {
 
     public matchListRequested$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(matchListRequested),
+            ofType(matchListRequested, matchesRefreshRequested),
             switchMap(() =>
                 this.matchesService.getMatches().pipe(
                     map(data => matchListRequestedSuccess({ response: data })),
@@ -52,7 +54,7 @@ export class MatchEffects {
 
     public matchDetailsRequested$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(matchDetailsRequested),
+            ofType(matchDetailsRequested, matchDetailsRefreshRequested),
             switchMap(action =>
                 this.matchesService.getMatch(action.matchId).pipe(
                     map(data => matchDetailsRequestedSuccess({ response: data })),

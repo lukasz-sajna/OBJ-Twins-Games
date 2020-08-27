@@ -53,7 +53,7 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
       untilDestroyed(this),
       filter(params => params.playerId),
       tap(params => {
-        this.store.dispatch(playerDetailsRequested({ id: params.playerId }));
+        this.store.dispatch(playerDetailsRequested({ playerId: params.playerId }));
         this.store.dispatch(playerStatusRequested({ id: params.playerId }));
       })
     ).subscribe();

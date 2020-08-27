@@ -33,8 +33,8 @@
     </div>
     <div class="col-sm">
       <app-player-stat-card [customContent]="true">
-        <div class="row" style="min-height: 50px;">
-          <div class="col mt-1 text-center" style="padding-top: 5px;">
+        <div class="row" style="min-height: 50px">
+          <div class="col mt-1 text-center" style="padding-top: 5px">
             <span
               class="d-inline font-weight-bold h5"
               [ngClass]="{
@@ -67,6 +67,7 @@
   <app-player-stats-table
     class="pt-0"
     [playersData]="players$"
+    [isLoading]="isLoading$ | async"
     (rowClicked)="onPlayerClicked($event)"
   ></app-player-stats-table>
   <mat-divider class="p-2"></mat-divider>
