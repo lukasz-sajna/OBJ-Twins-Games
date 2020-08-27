@@ -1,0 +1,20 @@
+<div class="row p-2">
+  <div class="col-auto">
+    <img [src]="avatar" alt="avatar" class="mat-elevation-z6 avatar-full" />
+  </div>
+  <div class="col-5">
+    <h3 class="pt-2"><b>Player Name: </b>{{ name }}</h3>
+    <h3><b>Player Status: </b>{{ GetStatus }}</h3>
+    <h3 [hidden]="ShowLastSeen">
+      <b>Last time online: </b
+      >{{ this.playerStatus.lastOnline | date: "yyyy-MM-dd HH:mm:ss" }}
+    </h3>
+    <button
+      mat-raised-button
+      color="basic"
+      (click)="steamProfileClicked.emit()"
+    >
+      Go to Steam profile
+    </button>
+  </div>
+</div>

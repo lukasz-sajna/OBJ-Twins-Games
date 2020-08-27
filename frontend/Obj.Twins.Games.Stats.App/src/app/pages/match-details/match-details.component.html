@@ -1,0 +1,49 @@
+<div
+  class="container mat-elevation-z6 match"
+  *ngIf="matchDetails$ | async as MatchDetails"
+>
+  <div class="row">
+    <div class="col">
+      <app-match-card [match]="MatchDetails"> </app-match-card>
+      <div *ngIf="isLoading$ | async" class="pt-2">
+        <mat-spinner class="mx-auto"></mat-spinner>
+      </div>
+    </div>
+  </div>
+  <mat-divider class="p-2"></mat-divider>
+  <div class="row">
+    <div class="col-6">
+      <h3><strong>Map: </strong>{{ MatchDetails.map | map }}</h3>
+      <h3>
+        <strong>Match finished at: </strong
+        >{{ MatchDetails.matchFinishedAt | date: "yyyy-MM-dd HH:mm:ss" }}
+      </h3>
+    </div>
+    <div class="offset-4 col-1" *ngIf="MatchDetails.demoUrl">
+      <button
+        mat-raised-button
+        color="basic"
+        (click)="downloadDemo(MatchDetails.demoUrl)"
+      >
+        Download demo
+      </button>
+    </div>
+  </div>
+  <mat-divider class="pt-4"></mat-divider>
+  <div class="row" *ngFor="let team of MatchDetails.teams; let i = index">
+    <div class="col mb-4">
+      <span
+        class="h3 clickable"
+        [ngClass]="{ 'mt-4': i !== 0 }"
+        (click)="teamClicked(team.id)"
+      >
+        {{ team.name }}
+      </span>
+      <app-player-stats-table
+        class="pt-0"
+        [playersData]="toObservable(team.players)"
+        (rowClicked)="rowClicked($event)"
+      ></app-player-stats-table>
+    </div>
+  </div>
+</div>

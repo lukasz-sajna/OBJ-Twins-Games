@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Obj.Twins.Games.Demo.Client\Obj.Twins.Games.Demo.Client.csproj" />
+    <ProjectReference Include="..\Obj.Twins.Games.ServerStatistics\Obj.Twins.Games.ServerStatistics.csproj" />
+    <ProjectReference Include="..\Obj.Twins.Games.Statistics\Obj.Twins.Games.Statistics.csproj" />
+    <ProjectReference Include="..\Obj.Twins.Games.Steam.Client\Obj.Twins.Games.Steam.Client.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,36 @@
+<div
+  *ngIf="playerDetails$ | async as PlayerDetails"
+  class="container mat-elevation-z6"
+>
+  <app-player-info
+    class="pb-2"
+    [name]="PlayerDetails.name"
+    [avatar]="PlayerDetails.avatar"
+    [playerStatus]="playerStatus$ | async"
+    [isRefreshingStatus]="PlayerDetails.isRefreshingStatus"
+    (steamProfileClicked)="goToSteamProfile(PlayerDetails.steamProfileUrl)"
+  ></app-player-info>
+  <mat-divider class="p-2"></mat-divider>
+  <app-player-stats
+    [playerInfo]="PlayerDetails"
+    [isLoading]="isLoading$ | async"
+  ></app-player-stats>
+  <mat-divider class="p-2"></mat-divider>
+  <h2 class="mb-0">Player teams</h2>
+  <app-team-stats-table
+    [teams]="playerTeams$"
+    [isLoading]="isLoading$ | async"
+    (playerClicked)="onPlayerClicked($event)"
+  ></app-team-stats-table>
+  <mat-divider class="p-2"></mat-divider>
+  <h2 class="mb-0">Player history of matches</h2>
+  <div class="pb-2">
+    <app-match-card
+      [resultGlow]="true"
+      [match]="match"
+      *ngFor="let match of PlayerDetails.matches"
+      (clicked)="matchClicked($event)"
+    >
+    </app-match-card>
+  </div>
+</div>

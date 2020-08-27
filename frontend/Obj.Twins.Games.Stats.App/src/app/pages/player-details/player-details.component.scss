@@ -1,0 +1,5 @@
+@import '~@angular/material/theming';
+
+app-match-card:hover {
+    @include mat-elevation(10);
+}

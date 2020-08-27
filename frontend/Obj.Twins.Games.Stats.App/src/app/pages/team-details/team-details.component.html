@@ -1,0 +1,84 @@
+<div
+  *ngIf="teamDetails$ | async as TeamDetails"
+  class="container mat-elevation-z6"
+>
+  <div class="row pt-2">
+    <div class="col-1">
+      <img [src]="flagUrl(TeamDetails.flag)" [alt]="TeamDetails.flag" />
+    </div>
+    <div class="col h1 pt-2">
+      {{ TeamDetails.name }}
+    </div>
+  </div>
+  <mat-divider class="p-2"></mat-divider>
+  <div class="row pb-3">
+    <div class="col-sm">
+      <app-player-stat-card
+        [value]="TeamDetails.matchesPlayed"
+        text="Matches played"
+      ></app-player-stat-card>
+    </div>
+    <div class="col-sm">
+      <app-player-stat-card
+        [value]="TeamDetails.wins"
+        text="Wins"
+      ></app-player-stat-card>
+    </div>
+    <div class="col-sm">
+      <app-player-stat-card
+        [value]="winRateDecimalToPercent(TeamDetails.winRatio)"
+        text="Win Rate"
+      >
+      </app-player-stat-card>
+    </div>
+    <div class="col-sm">
+      <app-player-stat-card [customContent]="true">
+        <div class="row" style="min-height: 50px">
+          <div class="col mt-1 text-center" style="padding-top: 5px">
+            <span
+              class="d-inline font-weight-bold h5"
+              [ngClass]="{
+                'streak-won': matchResult.Win === item.matchResult,
+                'streak-draw': matchResult.Draw === item.matchResult,
+                'streak-lost': matchResult.Lost === item.matchResult
+              }"
+              *ngFor="let item of TeamDetails.streak"
+            >
+              {{ matchResultShortName(item.matchResult) }}
+            </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p class="text-center">Recent Results</p>
+          </div>
+        </div>
+      </app-player-stat-card>
+    </div>
+    <div class="col-sm">
+      <app-player-stat-card
+        [value]="TeamDetails.longestWinStreak"
+        text="Longest Win Streak"
+      ></app-player-stat-card>
+    </div>
+  </div>
+  <mat-divider class="p-2"></mat-divider>
+  <app-player-stats-table
+    class="pt-0"
+    [playersData]="players$"
+    [isLoading]="isLoading$ | async"
+    (rowClicked)="onPlayerClicked($event)"
+  ></app-player-stats-table>
+  <mat-divider class="p-2"></mat-divider>
+  <h2 class="mb-0">Team history of matches</h2>
+  <div class="pb-2">
+    <app-match-card
+      [resultGlow]="true"
+      [match]="match"
+      *ngFor="let match of TeamDetails.matches"
+      (clicked)="matchClicked($event)"
+    >
+    </app-match-card>
+  </div>
+</div>

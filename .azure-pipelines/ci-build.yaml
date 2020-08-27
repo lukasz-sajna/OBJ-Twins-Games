@@ -1,0 +1,102 @@
+trigger:
+  - develop
+  - master
+
+pr:
+  branches:
+    include: [develop, master, releases/*]
+  autoCancel: true
+  
+name: "$(Date:yyy).$(Date:MM).$(Date:dd)r$(Rev:rr)_$(SourceBranchName)"
+jobs:
+  - job: BuildWebApi
+    displayName: Build Web Api
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+      - task: UseDotNet@2
+        displayName: 'Use .Net Core SDK 3.x'
+        inputs:
+          version: 3.x
+
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet restore'
+        inputs:
+          command: 'restore'
+          projects: '**/Obj.Twins.Games.Api.csproj'
+          feedsToUse: 'select'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet build'
+        inputs:
+          projects: '**/Obj.Twins.Games.Api.csproj'
+          arguments: '--configuration Release'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Publish API'
+        inputs:
+          command: publish
+          publishWebProjects: false
+          projects: '**/Obj.Twins.Games.Api.csproj'
+          arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/WebApi'
+          zipAfterPublish: false      
+
+      - publish: $(Build.ArtifactStagingDirectory)/WebApi
+        artifact: web-api
+
+      - task: efcore-migration-script-generator-task@0
+        inputs:
+          projectpath: './backend/Obj.Twins.Games/Obj.Twins.Games.Statistics'
+          startupprojectpath: './backend/Obj.Twins.Games/Obj.Twins.Games.Api'
+          databasecontexts: 'StatisticsDbContext'
+          targetfolder: '$(Build.ArtifactStagingDirectory)/database'
+          installdependencies: true
+          eftoolversion: '3.1'
+    
+      - task: CopyFiles@2
+        displayName: 'Copy database assets to artifact folder'
+        inputs:
+          SourceFolder: $(Build.SourcesDirectory)/backend/Obj.Twins.Games/Assets/Database
+          Contents: '*.sql'
+          TargetFolder: $(Build.ArtifactStagingDirectory)/database
+      
+      - publish: $(Build.ArtifactStagingDirectory)/database
+        artifact: 'database'
+        
+  - job: BuildWebApp
+    displayName: Build Web App
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+      - task: NodeTool@0
+        displayName: 'Use Node 12.9.x'
+        inputs:
+          versionSpec: 12.9.x
+
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          workingDir: './frontend/Obj.Twins.Games.Stats.App'
+          verbose: false
+
+      - task: Npm@1
+        displayName: 'npm run lint'
+        inputs:
+          command: custom
+          workingDir: './frontend/Obj.Twins.Games.Stats.App'
+          verbose: false
+          customCommand: 'run lint'
+        enabled: false
+          
+      - task: Npm@1
+        displayName: 'npm run build'
+        inputs:
+          command: custom
+          workingDir: './frontend/Obj.Twins.Games.Stats.App'
+          verbose: false
+          customCommand: 'run build:prod'
+      
+      - publish: './frontend/Obj.Twins.Games.Stats.App/dist'
+        artifact: 'web-app'
+
+
