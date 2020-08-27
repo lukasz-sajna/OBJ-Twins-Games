@@ -13,7 +13,7 @@ import { MaterialModule } from './shared/material.module';
 import { PlayerStatsTableComponent } from './components/player-stats-table/player-stats-table.component';
 import { HeaderComponent } from './containers/header/header.component';
 import { PlayersStatsComponent } from './pages/players-stats/players-stats.component';
-import { API_URL } from './injection-tokens';
+import { API_URL, STATS_HUB } from './injection-tokens';
 import { HeaderEffects } from './store/effects/header.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { MatchComponent } from './pages/match/match.component';
@@ -78,6 +78,7 @@ import { TeamDetailsComponent } from './pages/team-details/team-details.componen
   ],
   providers: [
     { provide: API_URL, useValue: environment.apiUrl },
+    { provide: STATS_HUB, useValue: environment.statsHub },
   ],
   bootstrap: [AppComponent]
 })

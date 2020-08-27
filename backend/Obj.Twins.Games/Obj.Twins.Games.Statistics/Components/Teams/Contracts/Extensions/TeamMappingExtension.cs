@@ -55,9 +55,8 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions
                     .Select(x => x.ToPlayerResponse())
                     .ToList()
                     .ToOverallPlayerStats(),
-                LongestWinStreak = matches.SelectMany(x => x.TeamInMatches)
-                    .Where(x => x.TeamId.Equals(team.Id))
-                    .Count(x => x.Result == MatchResult.Win)
+                LongestWinStreak = team.TeamInMatches.Where(x => x.TeamId.Equals(team.Id) && !x.Match.IsDeleted)
+                    .GetLongestWinStreak()
             };
         }
 
@@ -114,6 +113,35 @@ namespace Obj.Twins.Games.Statistics.Components.Teams.Contracts.Extensions
                 Streak = team.GetTeamStreak(),
                 Players = team.GetPlayersInTeam(playerId)
             };
+        }
+
+        private static int GetLongestWinStreak(this IEnumerable<TeamInMatch> teamInMatches)
+        {
+            var matches = teamInMatches
+                .Select(x => new StreakResponse
+                    { MatchResult = x.Result, MatchFinishedAt = x.Match.MatchFinishedAt })
+
+                .OrderByDescending(o => o.MatchFinishedAt)
+                .ToList();
+
+            var longestStreak = 0;
+            var currentStreak = 0;
+
+            foreach (var match in matches)
+            {
+                if (match.MatchResult.Equals(MatchResult.Win))
+                {
+                    currentStreak++;
+                    if (currentStreak > longestStreak)
+                        longestStreak = currentStreak;
+
+                    continue;
+                }
+
+                currentStreak = 0;
+            }
+
+            return longestStreak;
         }
 
     }

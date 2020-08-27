@@ -38,7 +38,7 @@ export class TeamStatsTableComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
 
-  public expandedElement: Team | null;
+  public expandedElement: Team;
 
   public dataSource: MatTableDataSource<Team> = new MatTableDataSource<Team>([]);
 
