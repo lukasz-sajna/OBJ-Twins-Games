@@ -102,33 +102,33 @@ stages:
 
           - publish: './frontend/Obj.Twins.Games.Stats.App/dist'
             artifact: 'web-app'
-    - stage: Deploy
-      dependsOn: Build
+  - stage: Deploy
+    dependsOn: Build
+    pool:
+      vmImage: 'windows-latest'
+    jobs:
+    - deployment: webApiDeployment
+      displayName: Deploy Web Api
+      environment: prod
+      variables:
+        - group: env_globals  
       pool:
         vmImage: 'windows-latest'
-      jobs:
-      - deployment: webApiDeployment
-        displayName: Deploy Web Api
-        environment: prod
-        variables:
-          - group: env_globals  
-        pool:
-          vmImage: 'windows-latest'
-        strategy:
-          runOnce:
-            deploy:
-              steps:                
-                - task: DownloadPipelineArtifact@2
-                  inputs:
-                    source: 'current'
-                    artifact: 'web-api'
-                    path: '$(Pipeline.Workspace)/web-api'          
-                
-                - task: replacetokens@3
-                  displayName: 'Replace tokens in .json files'
-                  inputs:
-                    rootDirectory: $(Pipeline.Workspace)/web-api/Obj.Twins.Games.Api
-                    targetFiles: '**/*.json'
-                    encoding: 'utf-8'
-                    escapeType: none
-                    actionOnMissing: 'fail'
+      strategy:
+        runOnce:
+          deploy:
+            steps:                
+              - task: DownloadPipelineArtifact@2
+                inputs:
+                  source: 'current'
+                  artifact: 'web-api'
+                  path: '$(Pipeline.Workspace)/web-api'          
+              
+              - task: replacetokens@3
+                displayName: 'Replace tokens in .json files'
+                inputs:
+                  rootDirectory: $(Pipeline.Workspace)/web-api/Obj.Twins.Games.Api
+                  targetFiles: '**/*.json'
+                  encoding: 'utf-8'
+                  escapeType: none
+                  actionOnMissing: 'fail'
