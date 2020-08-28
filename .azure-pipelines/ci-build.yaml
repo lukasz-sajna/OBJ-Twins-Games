@@ -9,7 +9,7 @@ pr:
   
 name: "$(Date:yyy).$(Date:MM).$(Date:dd)r$(Rev:rr)_$(SourceBranchName)"
 jobs:
-  - template: templates/build/jobs/buil-web-api.yaml
+  - template: templates/build/jobs/build-web-api.yaml
         
   - job: BuildWebApp
     displayName: Build Web App
