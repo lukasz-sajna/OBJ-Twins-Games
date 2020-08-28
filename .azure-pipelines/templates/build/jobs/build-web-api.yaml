@@ -1,0 +1,8 @@
+jobs:
+  - job: BuildWebApi
+    displayName: Build Web Api
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+      - template: ../steps/web-api.yaml
+      - template: ../steps/database.yaml

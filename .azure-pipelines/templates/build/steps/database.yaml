@@ -1,0 +1,19 @@
+steps:
+  - task: efcore-migration-script-generator-task@0
+    inputs:
+      projectpath: './backend/Obj.Twins.Games/Obj.Twins.Games.Statistics'
+      startupprojectpath: './backend/Obj.Twins.Games/Obj.Twins.Games.Api'
+      databasecontexts: 'StatisticsDbContext'
+      targetfolder: '$(Build.ArtifactStagingDirectory)/database'
+      installdependencies: true
+      eftoolversion: '3.1'
+    
+  - task: CopyFiles@2
+    displayName: 'Copy database assets to artifact folder'
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)/backend/Obj.Twins.Games/Assets/Database
+      Contents: '*.sql'
+      TargetFolder: $(Build.ArtifactStagingDirectory)/database
+  
+  - publish: $(Build.ArtifactStagingDirectory)/database
+    artifact: 'database'
