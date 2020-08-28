@@ -9,17 +9,14 @@ jobs:
   strategy:
     runOnce:
       deploy:
-        steps:
-          - download: none
-          
+        steps:     
+          - download: none           
           - task: DownloadPipelineArtifact@2
+            displayName: Download Artifact
             inputs:
-              buildType: 'specific'
-              project: '1b545c79-3af9-4a0d-9abf-bdc31562c282'
-              definition: '14'
-              buildVersionToDownload: 'latest'
-              artifactName: 'web-api'
-              targetPath: '$(Pipeline.Workspace)/web-api'          
+              source: 'current'
+              artifact: 'web-api'
+              path: '$(Pipeline.Workspace)/web-api'          
           
           - task: replacetokens@3
             displayName: 'Replace tokens in .json files'
@@ -29,27 +26,3 @@ jobs:
               encoding: 'utf-8'
               escapeType: none
               actionOnMissing: 'fail'
-
-          - task: AzureRmWebAppDeployment@4
-            displayName: 'Deploy to Azure App Service'
-            inputs:
-              azureSubscription: 'OBJ-Twins'
-              WebAppName: 'obj-twins-games-api'
-              packageForLinux: '$(Pipeline.Workspace)/web-api/Obj.Twins.Games.Api'
-            enabled: false
-            continueOnError: true
-
-          - task: FtpUpload@2          
-            displayName: 'Upload Web Api'
-            inputs:
-              credentialsOption: 'inputs'
-              serverUrl: 'ftps://waws-prod-am2-163.ftp.azurewebsites.windows.net'
-              username: 'obj-twins-games-api\$obj-twins-games-api'
-              password: '$(Api.Ftp.Password)'
-              rootDirectory: '$(Pipeline.Workspace)/web-api/Obj.Twins.Games.Api'
-              filePatterns: '**'
-              remoteDirectory: '/site/wwwroot'
-              clean: false
-              cleanContents: true
-              preservePaths: true
-              trustSSL: true

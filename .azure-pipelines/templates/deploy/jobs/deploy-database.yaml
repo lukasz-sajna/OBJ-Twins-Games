@@ -11,41 +11,10 @@ jobs:
       deploy:
         steps:        
           - download: none
-
           - task: DownloadPipelineArtifact@2
+            displayName: Download Artifact
             inputs:
-              buildType: 'specific'
-              project: '1b545c79-3af9-4a0d-9abf-bdc31562c282'
-              definition: '14'
-              buildVersionToDownload: 'latest'
-              artifactName: 'database'
-              targetPath: '$(Pipeline.Workspace)/database'
+              source: 'current'
+              artifact: 'database'
+              path: '$(Pipeline.Workspace)/database'
               patterns: '*.sql'
-
-          - task: CmdLine@2
-            inputs:
-              script: 'dir'
-              workingDirectory: '$(Pipeline.Workspace)/database'
-            continueOnError: true
-          
-          - task: SqlDacpacDeploymentOnMachineGroup@0
-            inputs:
-              TaskType: 'sqlQuery'
-              SqlFile: '$(Pipeline.Workspace)/database\StatisticsDbContext.sql'
-              ServerName: 'obj-twins.database.windows.net,1433'
-              DatabaseName: 'OBJ_Twins_Games'
-              AuthScheme: 'sqlServerAuthentication'
-              SqlUsername: 'lsajna'
-              SqlPassword: '$(Api.Sql.Password)'
-            continueOnError: true
-          
-          - task: SqlDacpacDeploymentOnMachineGroup@0
-            inputs:
-              TaskType: 'sqlQuery'
-              SqlFile: '$(Pipeline.Workspace)/database\InstallHangfire.sql'
-              ServerName: 'obj-twins.database.windows.net,1433'
-              DatabaseName: 'OBJ_Twins_Games'
-              AuthScheme: 'sqlServerAuthentication'
-              SqlUsername: 'lsajna'
-              SqlPassword: '$(Api.Sql.Password)'
-            continueOnError: true

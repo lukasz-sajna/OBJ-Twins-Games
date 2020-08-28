@@ -1,10 +1,15 @@
 trigger:
-  - develop
-  - master
+  branches:
+    include:
+    - '*'
+    exclude:
+    - develop
+    - master
+    - release/*
 
 pr:
   branches:
-    include: [develop, master, releases/*]
+    include: [develop, master, release/*]
   autoCancel: true
   
 name: "$(Date:yyy).$(Date:MM).$(Date:dd)r$(Rev:rr)_$(SourceBranchName)"
