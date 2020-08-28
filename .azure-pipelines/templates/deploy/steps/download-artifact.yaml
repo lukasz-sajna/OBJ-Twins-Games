@@ -1,0 +1,22 @@
+parameters:
+- name: artifact
+  displayName: 'Artifact name'
+  type: string
+- name: path
+  displayName: 'Artifact path'
+  type: string
+- name: patterns
+  displayName: 'Artifact pattern (optional)'
+  type: string
+  default: '*'
+
+steps:
+  - download: none              
+  - task: DownloadPipelineArtifact@2
+    displayName: Download Artifact
+    inputs:
+      source: 'current'
+      artifact: ${{ parameters.artifact }}
+      path: ${{ parameters.path }}
+      path: '$(Pipeline.Workspace)/web-app'
+      patterns: ${{ parameters.patterns }}

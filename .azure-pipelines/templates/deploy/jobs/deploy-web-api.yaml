@@ -9,14 +9,11 @@ jobs:
   strategy:
     runOnce:
       deploy:
-        steps:     
-          - download: none           
-          - task: DownloadPipelineArtifact@2
-            displayName: Download Artifact
-            inputs:
-              source: 'current'
-              artifact: 'web-api'
-              path: '$(Pipeline.Workspace)/web-api'          
+        steps:
+        - template: ../steps/download-artifact.yaml
+          parameters:
+            artifact: 'web-api'
+            path: '$(Pipeline.Workspace)/web-api'        
           
           - task: replacetokens@3
             displayName: 'Replace tokens in .json files'

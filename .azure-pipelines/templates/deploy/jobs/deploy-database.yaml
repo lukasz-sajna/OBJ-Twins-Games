@@ -9,12 +9,9 @@ jobs:
   strategy:
     runOnce:
       deploy:
-        steps:        
-          - download: none
-          - task: DownloadPipelineArtifact@2
-            displayName: Download Artifact
-            inputs:
-              source: 'current'
-              artifact: 'database'
-              path: '$(Pipeline.Workspace)/database'
-              patterns: '*.sql'
+        steps:
+        - template: ../steps/download-artifact.yaml
+          parameters:
+            artifact: 'database'
+            path: '$(Pipeline.Workspace)/database'
+            patterns: '*.sql'

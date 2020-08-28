@@ -10,14 +10,11 @@ jobs:
     runOnce:
       deploy:
         steps:
-          - download: none              
-          - task: DownloadPipelineArtifact@2
-            displayName: Download Artifact
-            inputs:
-              source: 'current'
-              artifact: 'web-app'
-              path: '$(Pipeline.Workspace)/web-app'          
-          
+        - template: ../steps/download-artifact.yaml
+          parameters:
+            artifact: 'web-app'
+            path: '$(Pipeline.Workspace)/web-app'
+                     
           - task: replacetokens@3
             displayName: 'Replace tokens in .js files'
             inputs:
