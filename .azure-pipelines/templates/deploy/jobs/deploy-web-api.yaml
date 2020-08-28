@@ -15,11 +15,11 @@ jobs:
             artifact: 'web-api'
             path: '$(Pipeline.Workspace)/web-api'        
           
-          - task: replacetokens@3
-            displayName: 'Replace tokens in .json files'
-            inputs:
-              rootDirectory: $(Pipeline.Workspace)/web-api/Obj.Twins.Games.Api
-              targetFiles: '**/*.json'
-              encoding: 'utf-8'
-              escapeType: none
-              actionOnMissing: 'fail'
+        - task: replacetokens@3
+          displayName: 'Replace tokens in .json files'
+          inputs:
+            rootDirectory: $(Pipeline.Workspace)/web-api/Obj.Twins.Games.Api
+            targetFiles: '**/*.json'
+            encoding: 'utf-8'
+            escapeType: none
+            actionOnMissing: 'fail'

@@ -14,14 +14,14 @@ jobs:
           parameters:
             artifact: 'web-app'
             path: '$(Pipeline.Workspace)/web-app'
-                     
-          - task: replacetokens@3
-            displayName: 'Replace tokens in .js files'
-            inputs:
-              rootDirectory: $(Pipeline.Workspace)/web-app/Obj-Twins-Games-Stats-App
-              targetFiles: |
-                **/main-es2015.*.js
-                **/main-es5.*.js
-              encoding: 'utf-8'
-              escapeType: none
-              actionOnMissing: 'fail'
+
+        - task: replacetokens@3
+          displayName: 'Replace tokens in .js files'
+          inputs:
+            rootDirectory: $(Pipeline.Workspace)/web-app/Obj-Twins-Games-Stats-App
+            targetFiles: |
+              **/main-es2015.*.js
+              **/main-es5.*.js
+            encoding: 'utf-8'
+            escapeType: none
+            actionOnMissing: 'fail'
