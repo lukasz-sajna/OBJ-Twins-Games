@@ -1,0 +1,29 @@
+steps:
+  - task: NodeTool@0
+    displayName: 'Use Node 12.9.x'
+    inputs:
+      versionSpec: 12.9.x
+  - task: Npm@1
+    displayName: 'npm install'
+    inputs:
+      workingDir: './frontend/Obj.Twins.Games.Stats.App'
+      verbose: false
+  - task: Npm@1
+    displayName: 'npm run lint'
+    inputs:
+      command: custom
+      workingDir: './frontend/Obj.Twins.Games.Stats.App'
+      verbose: false
+      customCommand: 'run lint'
+    enabled: false
+      
+  - task: Npm@1
+    displayName: 'npm run build'
+    inputs:
+      command: custom
+      workingDir: './frontend/Obj.Twins.Games.Stats.App'
+      verbose: false
+      customCommand: 'run build:prod'
+  
+  - publish: './frontend/Obj.Twins.Games.Stats.App/dist'
+    artifact: 'web-app'

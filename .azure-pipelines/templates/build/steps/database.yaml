@@ -1,5 +1,6 @@
 steps:
-  - task: efcore-migration-script-generator-task@0
+  - task: efcore-migration-script-generator-task@0  
+    displayName: 'Geenerate Database Script'
     inputs:
       projectpath: './backend/Obj.Twins.Games/Obj.Twins.Games.Statistics'
       startupprojectpath: './backend/Obj.Twins.Games/Obj.Twins.Games.Api'

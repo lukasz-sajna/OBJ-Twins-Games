@@ -1,0 +1,7 @@
+jobs:
+  - job: BuildWebApp
+    displayName: Build Web App
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+      - template: ../steps/web-app.yaml
