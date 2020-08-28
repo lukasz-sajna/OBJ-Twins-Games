@@ -112,8 +112,10 @@ stages:
       strategy:
         runOnce:
           deploy:
-            steps:                
+            steps:     
+              - download: none           
               - task: DownloadPipelineArtifact@2
+                displayName: Download Artifact
                 inputs:
                   source: 'current'
                   artifact: 'web-api'
@@ -141,6 +143,7 @@ stages:
             steps:        
               - download: none
               - task: DownloadPipelineArtifact@2
+                displayName: Download Artifact
                 inputs:
                   source: 'current'
                   artifact: 'database'
@@ -157,9 +160,9 @@ stages:
         runOnce:
           deploy:
             steps:
-              - download: none
-              
+              - download: none              
               - task: DownloadPipelineArtifact@2
+                displayName: Download Artifact
                 inputs:
                   source: 'current'
                   artifact: 'web-app'
