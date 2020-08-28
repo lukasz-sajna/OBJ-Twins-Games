@@ -18,5 +18,4 @@ steps:
       source: 'current'
       artifact: ${{ parameters.artifact }}
       path: ${{ parameters.path }}
-      path: '$(Pipeline.Workspace)/web-app'
       patterns: ${{ parameters.patterns }}
