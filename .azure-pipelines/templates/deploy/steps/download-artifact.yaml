@@ -8,7 +8,7 @@ parameters:
 - name: patterns
   displayName: 'Artifact pattern (optional)'
   type: string
-  default: '*'
+  default: '**'
 
 steps:
   - download: none              
