@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatchCardComponent } from './match-card.component';
-import { Match } from 'src/app/models/match';
+import { PlayerMatch } from 'src/app/models/player-match';
 
 describe('MatchCardComponent', () => {
   let component: MatchCardComponent;
@@ -20,7 +20,7 @@ describe('MatchCardComponent', () => {
     component.match = {
       map: 'de_dust2',
       teams: [{ name: 'Team A', flag: 'pl', score: 15 }, { name: 'Team B', flag: 'pl', score: 15 }]
-    } as Match;
+    } as PlayerMatch;
     fixture.detectChanges();
   });
 

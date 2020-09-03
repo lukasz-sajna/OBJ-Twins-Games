@@ -1,11 +1,23 @@
 <div class="container">
   <div class="match-list mat-elevation-z6 card card-body px-2 pt-0 pb-2">
-    <app-match-card
-      [match]="match"
-      (clicked)="matchClicked($event)"
-      *ngFor="let match of matchList$ | async as list"
-    ></app-match-card>
-    <div *ngIf="isLoading$ | async" class="pt-2">
+    <app-match-filter></app-match-filter>
+    <ng-container *ngIf="matchList$ | async as MatchList"
+      ><app-match-card
+        [match]="match"
+        (clicked)="matchClicked($event)"
+        *ngFor="let match of MatchList"
+      ></app-match-card>
+      <div
+        *ngIf="MatchList.length === 0 && !isLoading"
+        class="row h-100 align-items-center"
+        style="min-height: 100px"
+      >
+        <div class="col">
+          <h1 class="text-center">No matches found</h1>
+        </div>
+      </div>
+    </ng-container>
+    <div *ngIf="isLoading" class="pt-2 h-100" style="min-height: 100px">
       <mat-spinner class="mx-auto"></mat-spinner>
     </div>
   </div>
