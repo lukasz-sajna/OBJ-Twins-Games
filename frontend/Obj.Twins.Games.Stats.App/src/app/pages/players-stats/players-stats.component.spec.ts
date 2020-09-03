@@ -4,8 +4,6 @@ import { PlayersStatsComponent } from './players-stats.component';
 import { PlayerStatsTableComponent } from 'src/app/components/player-stats-table/player-stats-table.component';
 import { Observable, of } from 'rxjs';
 import { Store, MemoizedSelector } from '@ngrx/store';
-import { StatsState } from 'src/app/store/state/match-state';
-import { Match } from 'src/app/models/match';
 
 describe('PlayersStatsComponent', () => {
   let component: PlayersStatsComponent;

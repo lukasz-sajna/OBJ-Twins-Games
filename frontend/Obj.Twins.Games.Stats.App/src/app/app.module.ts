@@ -30,11 +30,12 @@ import { PlayerInfoComponent } from './components/player-info/player-info.compon
 import { PlayerStatsComponent } from './components/player-stats/player-stats.component';
 import { PlayerStatCardComponent } from './components/player-stat-card/player-stat-card.component';
 import { GoogleChartsModule } from 'angular-google-charts';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatchEffects } from './store/effects/match.effects';
 import { matchFeatureKey, matchReducer } from './store/reducers/match.reducer';
 import { MapPipe } from './pipes/map.pipe';
 import { TeamDetailsComponent } from './pages/team-details/team-details.component';
+import { MatchFilterComponent } from './containers/match-filter/match-filter.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { TeamDetailsComponent } from './pages/team-details/team-details.componen
     PlayerStatCardComponent,
     MapPipe,
     TeamDetailsComponent,
+    MatchFilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import { TeamDetailsComponent } from './pages/team-details/team-details.componen
     MaterialModule,
     HttpClientModule,
     GoogleChartsModule.forRoot({ version: '49' }),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: API_URL, useValue: environment.apiUrl },
