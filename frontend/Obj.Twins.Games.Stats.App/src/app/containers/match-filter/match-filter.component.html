@@ -1,0 +1,22 @@
+<div class="row pt-2">
+  <div class="col-sm-auto">
+    <h3 class="pt-3">Filters:</h3>
+  </div>
+  <div class="col-sm-auto">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <div [formGroup]="form">
+        <input
+          matInput
+          [satDatepicker]="picker"
+          formControlName="date"
+          (dateChange)="dateChanged($event)"
+        />
+      </div>
+      <sat-datepicker #picker [rangeMode]="true" [closeAfterSelection]="true">
+      </sat-datepicker>
+      <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+    </mat-form-field>
+  </div>
+</div>
+<mat-divider></mat-divider>

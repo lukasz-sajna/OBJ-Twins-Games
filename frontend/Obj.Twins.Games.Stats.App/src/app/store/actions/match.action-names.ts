@@ -10,3 +10,7 @@ export const MATCH_DETAILS_REQUESTED_FAILURE = '[Match Details Effect] Match_Det
 
 export const MATCHES_REFRESH_REQUESTED = '[Matches Stats Components] Matches_Refresh_Requested';
 export const MATCH_DETAILS_REFRESH_REQUESTED = '[Matches Stats Components] Matche_Details_Refresh_Requested';
+
+export const FILTER_CHANGED_REQUESTED = '[Matches Filter Components] Filter_Changed_Requested';
+export const FILTER_MATCHES_REQUESTED = '[Matches Filter Components] Filter_Matches_Requested';
+export const FILTER_MATCHES_REQUESTED_SUCCEEDED = '[Matches Filter Effect] Filter_Matches_Requested_Succeeded';

@@ -11,6 +11,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+
+
+
 
 @NgModule({
   imports: [
@@ -26,6 +35,16 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDividerModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    SatDatepickerModule,
+    SatNativeDateModule,
+  ],
+  providers: [
+    MatDatepickerModule,
   ],
   exports: [
     MatToolbarModule,
@@ -40,6 +59,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDividerModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    SatDatepickerModule,
+    SatNativeDateModule,
   ]
 })
 export class MaterialModule { }

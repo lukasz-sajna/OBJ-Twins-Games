@@ -1,4 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, ɵConsole } from '@angular/core';
+import { Console } from 'console';
 
 @Pipe({
   name: 'map'
@@ -65,7 +66,7 @@ export class MapPipe implements PipeTransform {
       case 'de_shortdust':
         return 'Short Dust';
       case 'de_shortnuke':
-        return 'Nuke';
+        return 'Short Nuke';
       case 'de_stmarc':
         return 'St. Marc';
       case 'de_sugarcrane':
@@ -77,8 +78,16 @@ export class MapPipe implements PipeTransform {
       case 'gd_rialto':
         return 'Rialto';
       default:
-        return value;
+        return this.transformCustomMap(value);
     }
+  }
+
+  private transformCustomMap(mapName: string): string {
+    if (mapName) {
+      const transformedMapName = mapName.match('[^\/]*$');
+      return transformedMapName.map(x => x)[0];
+    }
+    return mapName;
   }
 
 }
