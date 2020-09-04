@@ -76,7 +76,6 @@ export class MatchEffects {
         this.actions$.pipe(
             ofType(matchListRequestedSuccess),
             withLatestFrom(this.store.select(isDefaultfilterSelector)),
-            tap(([_, isDefault]) => console.log(isDefault)),
             filter(([_, isDefault]) => isDefault),
             withLatestFrom(this.store.select(matchListSelector), this.store.select(matchesMapsSelector)),
             map(([_, matches, matchesMaps]) =>
