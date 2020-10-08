@@ -26,7 +26,7 @@ namespace Obj.Twins.Games.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPlayerDetails(Guid id)
         {
-            var result = await _mediator.Send(new GetPlayerDetailsQuery {Id = id});
+            var result = await _mediator.Send(new GetPlayerDetailsQuery { Id = id });
 
             return Ok(result);
         }
@@ -34,7 +34,15 @@ namespace Obj.Twins.Games.Api.Controllers
         [HttpGet("{id}/status")]
         public async Task<IActionResult> GetPlayerStatus(Guid id)
         {
-            var result = await _mediator.Send(new GetPlayerSteamStatusQuery {Id = id});
+            var result = await _mediator.Send(new GetPlayerSteamStatusQuery { Id = id });
+
+            return Ok(result);
+        }
+
+        [HttpGet("{begin}/{end}")]
+        public async Task<IActionResult> GetFilteredPlayers(string begin, string end)
+        {
+            var result = await _mediator.Send(new GetFilteredPlayersQuery { Begin = DateTime.Parse(begin), End = DateTime.Parse(end) });
 
             return Ok(result);
         }
